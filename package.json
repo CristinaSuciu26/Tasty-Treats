@@ -1,0 +1,20 @@
+{
+  "name": "tasty-treats",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build src/index.html --public-url ./",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "homepage": "https://cristinasuciu26.github.io/Tasty-Treats/",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "gh-pages": "^6.3.0",
+    "parcel": "^2.14.4"
+  }
+}
