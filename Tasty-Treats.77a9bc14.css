@@ -45,6 +45,7 @@ a {
 }
 
 .header-container-logo {
+  align-items: center;
   gap: 160px;
   display: flex;
 }
@@ -81,7 +82,7 @@ a {
   background-color: #0000;
   border: none;
   position: relative;
-  top: -187px;
+  top: -240px;
   left: 131px;
 }
 
@@ -106,7 +107,7 @@ a {
   height: 20px;
   display: inline-block;
   position: relative;
-  bottom: -197px;
+  bottom: -217px;
   right: 112px;
 }
 
@@ -167,11 +168,6 @@ input:checked + .slider:before {
 
   .header-list a:hover {
     color: var(--accent-color);
-  }
-
-  .header-container-logo {
-    align-items: center;
-    display: flex;
   }
 
   .theme-switch {
