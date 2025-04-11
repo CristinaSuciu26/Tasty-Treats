@@ -1,1 +1,0 @@
-{"mappings":"AAAA,SAAS,gBAAgB,CAAC,oBAAoB,YAO9C","sources":["src/index.js"],"sourcesContent":["document.addEventListener(\"DOMContentLoaded\", function(){\r\n\r\n    try{\r\n\r\n    }catch(error){\r\n        \r\n    }\r\n})"],"names":[],"version":3,"file":"Tasty-Treats.579125c3.js.map","sourceRoot":"/__parcel_source_root/"}
