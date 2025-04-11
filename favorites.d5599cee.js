@@ -160,15 +160,15 @@
       });
     }
   }
-})({"5j6Kf":[function(require,module,exports,__globalThis) {
+})({"9eqPJ":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SERVER_PORT = 1234;
 var HMR_SECURE = false;
-var HMR_ENV_HASH = "439701173a9199ea";
+var HMR_ENV_HASH = "d6ea1d42532a7575";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "d68ad56631b563d9";
+module.bundle.HMR_BUNDLE_ID = "caaaf4c2d5599cee";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_SERVER_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -666,126 +666,8 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
     }
 }
 
-},{}],"a0t4e":[function(require,module,exports,__globalThis) {
-var _orderNowModal = require("./js/orderNowModal");
-var _sidebar = require("./js/sidebar");
-var _theme = require("./js/theme");
-document.addEventListener("DOMContentLoaded", function() {
-    try {
-        (0, _theme.theme)();
-        (0, _sidebar.sidebar)();
-        (0, _orderNowModal.orderNowModal)();
-    } catch (error) {
-        console.error("Error in script:", error);
-    }
-});
+},{}],"7XHfE":[function(require,module,exports,__globalThis) {
 
-},{"./js/sidebar":"jWbWy","./js/theme":"6DWc8","./js/orderNowModal":"55TPO"}],"jWbWy":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "sidebar", ()=>sidebar);
-const sidebar = ()=>{
-    const sidebar = document.getElementById("sidebar");
-    const closeSidebar = document.getElementById("close-sidebar");
-    const openSidebarButtons = document.querySelectorAll("#open-sidebar");
-    openSidebarButtons.forEach((button)=>{
-        button.addEventListener("click", function() {
-            sidebar.style.display = "flex";
-            console.log("openSidebar clicked");
-            console.log("Sidebar style:", sidebar.style.display);
-        });
-    });
-    closeSidebar.addEventListener("click", function() {
-        sidebar.style.display = "none";
-    });
-    const handleResize = ()=>{
-        if (window.innerWidth > 768) sidebar.style.display = "none";
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-};
+},{}]},["9eqPJ","7XHfE"], "7XHfE", "parcelRequire78be", {})
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jnFvT":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"6DWc8":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "theme", ()=>theme);
-const theme = ()=>{
-    const toggleButtons = document.querySelectorAll("#theme-toggle-light, #theme-toggle-dark, #theme-toggle-sidebar");
-    const darkThemeLogo = document.getElementById("dark-theme-logo");
-    const lightThemeLogo = document.getElementById("light-theme-logo");
-    // Helper function to update logos
-    const updateLogos = (isDark)=>{
-        darkThemeLogo.style.display = isDark ? "flex" : "none";
-        lightThemeLogo.style.display = isDark ? "none" : "flex";
-    };
-    // Load saved theme from localStorage
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = savedTheme === "dark" || !savedTheme && prefersDark;
-    document.body.classList.toggle("dark-theme", isDark);
-    updateLogos(isDark);
-    // Set the state of all toggles
-    toggleButtons.forEach((button)=>{
-        button.checked = isDark;
-        button.addEventListener("change", ()=>{
-            const isDark = document.body.classList.toggle("dark-theme");
-            updateLogos(isDark);
-            toggleButtons.forEach((toggle)=>{
-                toggle.checked = isDark;
-            });
-            localStorage.setItem("theme", isDark ? "dark" : "light");
-        });
-    });
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"55TPO":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "orderNowModal", ()=>orderNowModal);
-const orderNowModal = ()=>{
-    const modal = document.getElementById("order-now-modal");
-    const openModal = document.getElementById("open-order-now-modal");
-    const closeModal = document.getElementById("close-order-now-modal");
-    openModal.addEventListener("click", ()=>{
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    });
-    closeModal.addEventListener("click", ()=>{
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    });
-};
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
-
-//# sourceMappingURL=Tasty-Treats.31b563d9.js.map
+//# sourceMappingURL=favorites.d5599cee.js.map
