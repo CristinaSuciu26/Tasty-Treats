@@ -8,10 +8,17 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CristinaSuciu26/Tasty-Treats.git"
+  },
+  "author": "Cristina Suciu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CristinaSuciu26/Tasty-Treats/issues"
+  },
   "homepage": "https://cristinasuciu26.github.io/Tasty-Treats/",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
   "description": "",
   "devDependencies": {
     "gh-pages": "^6.3.0",
