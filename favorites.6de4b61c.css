@@ -11,29 +11,34 @@
   font-size: 14px;
   display: flex;
 }
-.favorites-img-tablet,
-.favorites-img-desktop {
+
+.favorites-img-tablet, .favorites-img-desktop {
   display: none;
 }
-@media screen and (width>=768px) {
+
+@media screen and (width >= 768px) {
   .empty-page {
     max-width: 400px;
     margin-top: 40px;
     font-size: 16px;
   }
+
   .favorites-img-tablet {
     display: block;
   }
 }
-@media screen and (width>=1280px) {
+
+@media screen and (width >= 1280px) {
   .empty-page {
     max-width: 524px;
   }
+
   .favorites-img-desktop {
     display: block;
   }
+
   .favorites-img-tablet {
     display: none;
   }
 }
-/*# sourceMappingURL=favorites.0a311332.css.map */
+/*# sourceMappingURL=favorites.6de4b61c.css.map */
