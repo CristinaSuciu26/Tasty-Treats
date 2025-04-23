@@ -434,21 +434,45 @@ input:checked + .slider:before {
   }
 
   .hero-container {
-    width: 45%;
+    flex-direction: row;
+    align-items: center;
+    gap: 21px;
+    width: 100%;
     max-width: 1200px;
+    margin-top: 38px;
     margin-left: 50px;
+  }
+
+  .chef-img {
+    width: 182px;
+    height: 455px;
+  }
+
+  .food-img {
+    width: 351px;
+    height: 455px;
+  }
+
+  #masterclass-list {
+    gap: 250px;
+  }
+
+  .topic-name {
+    color: #f8f8f899;
+    width: 90%;
+    font-size: 14px;
+    font-weight: 500;
+    top: 351px;
+    left: 100px;
+  }
+
+  .hero-title {
+    width: 66%;
   }
 
   .swiper {
     max-width: 1200px;
-  }
-
-  #masterclass-list {
-    gap: 60px;
-  }
-
-  .topic-name {
-    left: 129px;
+    height: 480px;
   }
 }
 /*# sourceMappingURL=Tasty-Treats.77a9bc14.css.map */
