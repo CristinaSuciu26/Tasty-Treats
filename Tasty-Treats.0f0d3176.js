@@ -1,6 +1,6 @@
 async function e() {
   try {
-    let e = await fetch("/data/masterclasses.json");
+    let e = await fetch("/public/data/masterclasses.json");
     if (!e.ok) throw Error(`Failed to fetch: ${e.status}`);
     let t = await e.json();
     return console.log("Parsed JSON data:", t), t;
