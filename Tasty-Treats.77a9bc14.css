@@ -217,11 +217,13 @@ input:checked + .slider:before {
   align-items: center;
   width: 310px;
   height: 586px;
-  margin: 10px auto;
   padding: 15px;
   display: flex;
-  position: relative;
+  position: fixed;
+  top: 50%;
+  left: 50%;
   overflow-y: hidden;
+  transform: translate(-50%, -50%);
 }
 
 .order-now-content h3 {
@@ -432,7 +434,7 @@ input:checked + .slider:before {
   }
 
   .header-container-logo {
-    gap: 384px;
+    gap: 429px;
   }
 
   .hero-container {
