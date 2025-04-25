@@ -667,13 +667,17 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"a0t4e":[function(require,module,exports,__globalThis) {
+var _categoriesDisplay = require("./js/categoriesDisplay");
 var _masterclassDisplay = require("./js/masterclassDisplay");
 var _orderNowModal = require("./js/orderNowModal");
+var _popularRecipesDisplay = require("./js/popularRecipesDisplay");
 var _sidebar = require("./js/sidebar");
 var _theme = require("./js/theme");
 document.addEventListener("DOMContentLoaded", function() {
     try {
         (0, _masterclassDisplay.masterClassDisplayInit)();
+        (0, _categoriesDisplay.categoriesListDisplay)();
+        (0, _popularRecipesDisplay.displayPopularRecipes)();
         (0, _theme.theme)();
         (0, _sidebar.sidebar)();
         (0, _orderNowModal.orderNowModal)();
@@ -682,7 +686,78 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-},{"./js/masterclassDisplay":"bpJZ7","./js/orderNowModal":"55TPO","./js/sidebar":"jWbWy","./js/theme":"6DWc8"}],"bpJZ7":[function(require,module,exports,__globalThis) {
+},{"./js/categoriesDisplay":"aP1p0","./js/masterclassDisplay":"bpJZ7","./js/orderNowModal":"55TPO","./js/popularRecipesDisplay":"amd2h","./js/sidebar":"jWbWy","./js/theme":"6DWc8"}],"aP1p0":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "categoriesListDisplay", ()=>categoriesListDisplay);
+var _fetchCategories = require("./fetchCategories");
+function categoriesList(categoriesData) {
+    const categoriesList = document.getElementById("categories-list");
+    categoriesData.forEach((element)=>{
+        const categoriesItem = document.createElement("li");
+        categoriesItem.classList.add("categories-item");
+        categoriesItem.textContent = element.name;
+        categoriesList.appendChild(categoriesItem);
+    });
+}
+function categoriesListDisplay() {
+    (0, _fetchCategories.fetchCategories)().then((data)=>{
+        console.log("Parsed JSON data:", data);
+        categoriesList(data);
+    }).catch((error)=>{
+        console.error("Error fetching masterclasses:", error);
+    });
+}
+
+},{"./fetchCategories":"9MssB","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"9MssB":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "fetchCategories", ()=>fetchCategories);
+var _categoriesListJson = require("../data/categoriesList.json");
+var _categoriesListJsonDefault = parcelHelpers.interopDefault(_categoriesListJson);
+async function fetchCategories() {
+    try {
+        console.log("Parsed JSON data", (0, _categoriesListJsonDefault.default));
+        return 0, _categoriesListJsonDefault.default;
+    } catch (error) {
+        console.error("Error fetching categories", error);
+    }
+}
+
+},{"../data/categoriesList.json":"1Ta8Q","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"1Ta8Q":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("[{\"_id\":\"6462a6cd4c3d0ddd28897f8e\",\"name\":\"Beef\"},{\"_id\":\"6462a6cd4c3d0ddd28897f95\",\"name\":\"Breakfast\"},{\"_id\":\"6462a6cd4c3d0ddd28897f8d\",\"name\":\"Chicken\"},{\"_id\":\"6462a6cd4c3d0ddd28897f8f\",\"name\":\"Dessert\"},{\"_id\":\"6462a6cd4c3d0ddd28897f97\",\"name\":\"Goat\"},{\"_id\":\"6462a6cd4c3d0ddd28897f8b\",\"name\":\"Lamb\"},{\"_id\":\"6462a6cd4c3d0ddd28897f93\",\"name\":\"Miscellaneous\"},{\"_id\":\"6462a6cd4c3d0ddd28897f94\",\"name\":\"Pasta\"},{\"_id\":\"6462a6cd4c3d0ddd28897f91\",\"name\":\"Pork\"},{\"_id\":\"6462a6cd4c3d0ddd28897f8a\",\"name\":\"Seafood\"},{\"_id\":\"6462a6cd4c3d0ddd28897f96\",\"name\":\"Side\"},{\"_id\":\"6462a6cd4c3d0ddd28897f98\",\"name\":\"Soup\"},{\"_id\":\"6462a6cd4c3d0ddd28897f8c\",\"name\":\"Starter\"},{\"_id\":\"6462a6cd4c3d0ddd28897f90\",\"name\":\"Vegan\"},{\"_id\":\"6462a6cd4c3d0ddd28897f92\",\"name\":\"Vegetarian\"}]");
+
+},{}],"jnFvT":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"bpJZ7":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // Function to initialize the masterclass display
@@ -746,36 +821,6 @@ async function fetchMasterclasses() {
 },{"../data/masterclasses.json":"eiMEy","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"eiMEy":[function(require,module,exports,__globalThis) {
 module.exports = JSON.parse("[{\"cook\":{\"name\":\"Heston Chan\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/HestonChan.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/HestonChan.webp\"},\"topic\":{\"name\":\"Grilled, smoky, delicious barbecue\",\"area\":\"Spanish\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish1.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish1.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish1.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish1.webp\"},\"_id\":\"647495d0c825f1570b04182d\"},{\"cook\":{\"name\":\"Ana Smyth\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.webp\"},\"topic\":{\"name\":\"Hot, cheesy and satisfying pizza\",\"area\":\"Italian\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.webp\"},\"_id\":\"647495d0c825f1570b04182e\"},{\"cook\":{\"name\":\"Ferran Meyer\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.webp\"},\"topic\":{\"name\":\"Fluffy and sweet pancakes\",\"area\":\"American\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.webp\"},\"_id\":\"647495d0c825f1570b04182f\"},{\"cook\":{\"name\":\"Heston Chan\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/HestonChan.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/HestonChan.webp\"},\"topic\":{\"name\":\"Grilled, smoky, delicious barbecue\",\"area\":\"Spanish\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish1.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish1.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish1.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish1.webp\"},\"_id\":\"647495d0c825f1570b04182d\"},{\"cook\":{\"name\":\"Ana Smyth\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.webp\"},\"topic\":{\"name\":\"Hot, cheesy and satisfying pizza\",\"area\":\"Italian\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.webp\"},\"_id\":\"647495d0c825f1570b04182e\"},{\"cook\":{\"name\":\"Ferran Meyer\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.webp\"},\"topic\":{\"name\":\"Fluffy and sweet pancakes\",\"area\":\"American\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.webp\"},\"_id\":\"647495d0c825f1570b04182f\"},{\"cook\":{\"name\":\"Heston Chan\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/HestonChan.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/HestonChan.webp\"},\"topic\":{\"name\":\"Grilled, smoky, delicious barbecue\",\"area\":\"Spanish\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish1.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish1.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish1.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish1.webp\"},\"_id\":\"647495d0c825f1570b04182d\"},{\"cook\":{\"name\":\"Ana Smyth\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.webp\"},\"topic\":{\"name\":\"Hot, cheesy and satisfying pizza\",\"area\":\"Italian\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.webp\"},\"_id\":\"647495d0c825f1570b04182e\"},{\"cook\":{\"name\":\"Ferran Meyer\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.webp\"},\"topic\":{\"name\":\"Fluffy and sweet pancakes\",\"area\":\"American\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.webp\"},\"_id\":\"647495d0c825f1570b04182f\"},{\"cook\":{\"name\":\"Ana Smyth\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/AnaSmyth.webp\"},\"topic\":{\"name\":\"Hot, cheesy and satisfying pizza\",\"area\":\"Italian\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish2.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish2.webp\"},\"_id\":\"647495d0c825f1570b04182e\"},{\"cook\":{\"name\":\"Ferran Meyer\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/FerranMeyer.webp\"},\"topic\":{\"name\":\"Fluffy and sweet pancakes\",\"area\":\"American\",\"previewUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.png\",\"imgUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.png\",\"imgWebpUrl\":\"https://tasty-treats-backend.p.goit.global/imgDish3.webp\",\"previewWebpUrl\":\"https://tasty-treats-backend.p.goit.global/previewDish3.webp\"},\"_id\":\"647495d0c825f1570b04182f\"}]");
 
-},{}],"jnFvT":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
 },{}],"gCYjv":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -826,7 +871,62 @@ const orderNowModal = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jWbWy":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"amd2h":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "displayPopularRecipes", ()=>displayPopularRecipes);
+var _fetchPopularRecipes = require("./fetchPopularRecipes");
+function popularRecipes(recipes) {
+    const recipesList = document.getElementById("recipes-list");
+    recipes.forEach((recipe)=>{
+        const recipeItem = document.createElement("li");
+        recipeItem.classList.add("popular-recipe-item");
+        const imageContainer = document.createElement("img");
+        imageContainer.src = recipe.preview;
+        imageContainer.alt = recipe.title;
+        recipeItem.appendChild(imageContainer);
+        const recipeDetails = document.createElement("div");
+        recipeDetails.classList.add("details-container");
+        const recipeName = document.createElement("h3");
+        recipeName.textContent = recipe.title;
+        recipeName.classList.add("popular-recipe-name");
+        recipeDetails.appendChild(recipeName);
+        const recipeDescription = document.createElement("p");
+        recipeDescription.textContent = recipe.description;
+        recipeDescription.classList.add("recipe-description");
+        recipeDetails.appendChild(recipeDescription);
+        recipeItem.appendChild(recipeDetails);
+        recipesList.appendChild(recipeItem);
+    });
+}
+function displayPopularRecipes() {
+    (0, _fetchPopularRecipes.fetchPopularRecipes)().then((data)=>{
+        console.log("Parsed JSON data", data);
+        popularRecipes(data);
+    }).catch((error)=>{
+        console.error("Error fetching recipes:", error);
+    });
+}
+
+},{"./fetchPopularRecipes":"8hCB7","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"8hCB7":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "fetchPopularRecipes", ()=>fetchPopularRecipes);
+var _popularRecipesJson = require("../data/popularRecipes.json");
+var _popularRecipesJsonDefault = parcelHelpers.interopDefault(_popularRecipesJson);
+async function fetchPopularRecipes() {
+    try {
+        console.log("Parsed JSON data", (0, _popularRecipesJsonDefault.default));
+        return 0, _popularRecipesJsonDefault.default;
+    } catch (error) {
+        console.error("Error fetching pupular recipes", error);
+    }
+}
+
+},{"../data/popularRecipes.json":"aA0ZA","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aA0ZA":[function(require,module,exports,__globalThis) {
+module.exports = JSON.parse("[{\"_id\":\"6462a8f74c3d0ddd28897fc1\",\"title\":\"Chocolate Gateau\",\"description\":\"A French dessert consisting of layers of chocolate sponge cake and chocolate ganache, typically topped with chocolate glaze and chocolate decorations.\",\"preview\":\"https://ftp.goit.study/img/so-yummy/preview/Chocolate%20Gateau.jpg\",\"popularity\":1189.02},{\"_id\":\"6462a8f74c3d0ddd28897fbc\",\"title\":\"Irish stew\",\"description\":\"A traditional Irish dish made with lamb, potatoes, carrots, onions, and herbs, cooked in a broth or gravy.\",\"preview\":\"https://ftp.goit.study/img/so-yummy/preview/Irish%20stew.jpg\",\"popularity\":958.39},{\"_id\":\"6462a8f74c3d0ddd28897fb8\",\"title\":\"Mediterranean Pasta Salad\",\"description\":\"A salad made with pasta, vegetables (such as tomatoes, cucumbers, and olives), feta cheese, and a dressing made with olive oil and lemon juice.\",\"preview\":\"https://ftp.goit.study/img/so-yummy/preview/Mediterranean%20Pasta%20Salad.jpg\",\"popularity\":691.9},{\"_id\":\"6462a8f74c3d0ddd28897fb9\",\"title\":\"Lamb tomato and sweet spices\",\"description\":\"A Moroccan-inspired dish made with lamb, tomatoes, onions, and spices (such as cinnamon, ginger, and cumin), typically served with couscous or bread.\",\"preview\":\"https://ftp.goit.study/img/so-yummy/preview/Lamb%20tomato%20and%20sweet%20spices.jpg\",\"popularity\":679.68}]");
+
+},{}],"jWbWy":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "sidebar", ()=>sidebar);
