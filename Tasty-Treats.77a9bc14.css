@@ -689,6 +689,7 @@ input::placeholder {
     flex-direction: row;
     align-items: normal;
     gap: 32px;
+    margin-left: 58px;
   }
 
   .category-btn {
@@ -723,7 +724,7 @@ input::placeholder {
   }
 
   .header-container-logo {
-    gap: 429px;
+    gap: 475px;
   }
 
   .hero-container {
@@ -731,7 +732,7 @@ input::placeholder {
     align-items: center;
     gap: 21px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
     margin-top: 38px;
     margin-left: 50px;
   }
@@ -747,7 +748,7 @@ input::placeholder {
   }
 
   #masterclass-list {
-    gap: 250px;
+    gap: 166px;
   }
 
   .topic-name {
@@ -781,6 +782,7 @@ input::placeholder {
   }
 
   .categories {
+    margin-left: 0;
     padding: 50px;
   }
 
