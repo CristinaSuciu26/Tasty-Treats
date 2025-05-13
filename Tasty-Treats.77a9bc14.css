@@ -609,6 +609,64 @@ input::placeholder {
   color: var(--accent-color);
 }
 
+.recipe-results {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  margin-top: 50px;
+  display: flex;
+}
+
+.recipe-img {
+  border-radius: 8px;
+  width: 335px;
+  height: 335px;
+}
+
+.favorites-button {
+  cursor: pointer;
+  background-color: #0000;
+  border: none;
+  position: absolute;
+  top: 16px;
+  left: 288px;
+}
+
+.recipe-card {
+  max-width: 335px;
+  position: relative;
+}
+
+.details-card-container {
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  display: flex;
+  position: absolute;
+  bottom: 63px;
+}
+
+.recipe-title {
+  text-transform: uppercase;
+  color: #f8f8f8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.card-description {
+  display: -webkit-box;
+  display: box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  text-overflow: ellipsis;
+  color: #f8f8f8;
+  -webkit-box-orient: vertical;
+  font-size: 12px;
+  font-weight: 400;
+  overflow: hidden;
+}
+
 @media screen and (width >= 768px) {
   #open-sidebar {
     display: none;
@@ -716,6 +774,49 @@ input::placeholder {
   .categories-wrapper {
     margin-top: 60px;
   }
+
+  .favorites-button {
+    transition: all .3s;
+    left: 131px;
+  }
+
+  .details-card-container {
+    width: 100%;
+    bottom: 30px;
+  }
+
+  .recipe-card {
+    max-width: 100%;
+    position: relative;
+  }
+
+  .recipe-results {
+    flex-flow: wrap;
+    justify-content: center;
+    gap: 15px;
+    display: flex;
+  }
+
+  .recipe-card {
+    box-sizing: border-box;
+    border-radius: 12px;
+    flex-direction: column;
+    flex: 43%;
+    align-items: center;
+    max-width: 303px;
+    max-height: 203px;
+    display: flex;
+    box-shadow: 0 2px 8px #0000000f;
+  }
+
+  .recipe-img {
+    object-fit: cover;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 210px;
+    height: 230px;
+    margin-bottom: 12px;
+  }
 }
 
 @media screen and (width >= 1280px) {
@@ -798,6 +899,32 @@ input::placeholder {
 
   .search-recipes-container {
     grid-area: 16px;
+  }
+
+  .recipe-card {
+    flex: 30%;
+    max-width: 1260px;
+  }
+
+  .recipe-results {
+    row-gap: 82px;
+  }
+
+  .favorites-button {
+    left: 217px;
+  }
+
+  .recipe-img {
+    object-fit: cover;
+    border-radius: 8px;
+    max-width: 260px;
+    height: 260px;
+    margin-bottom: 0;
+  }
+
+  .details-card-container {
+    width: 78%;
+    bottom: 10px;
   }
 }
 /*# sourceMappingURL=Tasty-Treats.77a9bc14.css.map */
