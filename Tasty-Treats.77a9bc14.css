@@ -700,6 +700,7 @@ input::placeholder {
   border-radius: 8px;
   width: 89px;
   height: 31px;
+  margin-left: 88px;
   font-size: 12px;
   font-weight: 500;
   transition: background-color .4s;
@@ -709,6 +710,13 @@ input::placeholder {
   backdrop-filter: blur(8px);
   border: var(--accent-color) 1px solid;
   background-color: #0000;
+}
+
+.rating {
+  color: #fff;
+  align-items: center;
+  gap: 2px;
+  display: flex;
 }
 
 .loader-overlay {
@@ -737,6 +745,40 @@ input::placeholder {
   to {
     transform: rotate(360deg);
   }
+}
+
+.pagination-controls {
+  align-items: center;
+  gap: 24px;
+  max-width: 310px;
+  height: 100px;
+  margin-top: 60px;
+  display: flex;
+}
+
+.prev-button, .next-button {
+  background-color: var(--text-color);
+  color: var(--text-color);
+  cursor: pointer;
+  border: 1px solid #999;
+  border-radius: 24px;
+  width: 44px;
+  height: 44px;
+}
+
+.page-button {
+  cursor: pointer;
+  width: 44px;
+  height: 44px;
+  color: var(--text-color);
+  background-color: #0000;
+  border: 1px solid #999;
+  border-radius: 24px;
+  font-weight: 600;
+}
+
+.active {
+  background-color: var(--accent-color);
 }
 
 @media screen and (width >= 768px) {
@@ -892,6 +934,21 @@ input::placeholder {
     height: 230px;
     margin-bottom: 12px;
   }
+
+  .rating {
+    flex-direction: row;
+  }
+
+  .recipe-card-button {
+    width: 61px;
+    margin-left: 9px;
+    font-size: 11px;
+  }
+
+  .stars-container {
+    width: 45px;
+    display: flex;
+  }
 }
 
 @media screen and (width >= 1280px) {
@@ -1005,6 +1062,24 @@ input::placeholder {
 
   .recipe-title {
     font-size: 14px;
+  }
+
+  .recipe-card-button {
+    width: 89px;
+    height: 31px;
+    margin-left: 68px;
+    font-size: 12px;
+  }
+
+  .stars-container {
+    width: 75px;
+    display: flex;
+  }
+
+  .pagination-controls {
+    position: relative;
+    top: 66px;
+    left: 340px;
   }
 }
 /*# sourceMappingURL=Tasty-Treats.77a9bc14.css.map */

@@ -699,7 +699,7 @@ function loadFavorites() {
     }
     // Show recipe results if there are favorites
     recipeResults.style.display = "flex";
-    emptyFavorites.style.display = "none"; // Hide the empty page when there are favorites
+    emptyFavorites.style.display = "none";
     // Check if favorites array is empty and display a message
     if (!favorites || favorites.length === 0) {
         recipeResults.innerHTML = "<p>No recipes found.</p>";
