@@ -160,7 +160,7 @@
       });
     }
   }
-})({"cRtnc":[function(require,module,exports,__globalThis) {
+})({"ecpW6":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -168,7 +168,7 @@ var HMR_SERVER_PORT = 1234;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "439701173a9199ea";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "bd396016f9e78b9a";
+module.bundle.HMR_BUNDLE_ID = "bd766c4e05b27b46";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_SERVER_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -710,25 +710,14 @@ exports.export = function(dest, destName, get) {
 },{}],"ci3Vj":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "updateRecipes", ()=>updateRecipes);
 parcelHelpers.export(exports, "renderRecipes", ()=>renderRecipes);
+parcelHelpers.export(exports, "updateRecipes", ()=>updateRecipes);
 var _fetchData = require("../fetchData");
 var _categoriesDisplay = require("./categoriesDisplay");
-// Search input reference
+var _pagination = require("./pagination");
 const searchInput = document.getElementById("search-recipes");
 let currentPage = 1;
 const itemsPerPage = 6;
-async function updateRecipes() {
-    const allRecipes = await (0, _fetchData.fetchRecipes)();
-    const searchQuery = searchInput?.value?.trim().toLowerCase() || "";
-    const selectedCategory = (0, _categoriesDisplay.getActiveCategory)();
-    let filtered = allRecipes;
-    // Filter by category
-    if (selectedCategory) filtered = filtered.filter((r)=>r.category === selectedCategory);
-    // Filter by search input
-    if (searchQuery) filtered = filtered.filter((r)=>r.title.toLowerCase().includes(searchQuery));
-    renderRecipes(filtered);
-}
 function renderRecipes(recipes) {
     const container = document.getElementById("recipe-results");
     const totalPages = Math.ceil(recipes.length / itemsPerPage);
@@ -747,7 +736,6 @@ function renderRecipes(recipes) {
         return;
     }
     currentRecipes.forEach((recipe)=>{
-        //  Ensure the recipe has a unique ID
         if (!recipe.id) recipe.id = `${recipe.title}-${recipe.category}`.replace(/\s+/g, "-").toLowerCase();
         const item = document.createElement("div");
         item.classList.add("recipe-card");
@@ -828,11 +816,25 @@ function renderRecipes(recipes) {
         item.appendChild(button);
         item.appendChild(detailsContainer);
         container.appendChild(item);
-        renderPagination(totalPages);
+        (0, _pagination.renderPagination)(currentPage, totalPages, (newPage)=>{
+            currentPage = newPage;
+            updateRecipes();
+        });
     });
 }
+async function updateRecipes() {
+    const allRecipes = await (0, _fetchData.fetchRecipes)();
+    const searchQuery = searchInput?.value?.trim().toLowerCase() || "";
+    const selectedCategory = (0, _categoriesDisplay.getActiveCategory)();
+    let filtered = allRecipes;
+    // Filter by category
+    if (selectedCategory) filtered = filtered.filter((r)=>r.category === selectedCategory);
+    // Filter by search input
+    if (searchQuery) filtered = filtered.filter((r)=>r.title.toLowerCase().includes(searchQuery));
+    renderRecipes(filtered);
+}
 
-},{"../fetchData":"cte0F","./categoriesDisplay":"7R5vv","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cte0F":[function(require,module,exports,__globalThis) {
+},{"../fetchData":"cte0F","./categoriesDisplay":"7R5vv","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./pagination":"a0cNF"}],"cte0F":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "fetchCategories", ()=>fetchCategories);
@@ -961,7 +963,56 @@ function categoriesListDisplay() {
     });
 }
 
-},{"../fetchData":"cte0F","./searchRecipes":"ci3Vj","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jWbWy":[function(require,module,exports,__globalThis) {
+},{"../fetchData":"cte0F","./searchRecipes":"ci3Vj","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"a0cNF":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "renderPagination", ()=>renderPagination);
+var _searchRecipes = require("./searchRecipes");
+const renderPagination = (currentPage, totalPages, onPageChange)=>{
+    const paginationContainer = document.getElementById("pagination");
+    if (!paginationContainer) return;
+    paginationContainer.innerHTML = "";
+    if (totalPages <= 1) return;
+    const prevButton = document.createElement("button");
+    prevButton.classList.add("prev-button");
+    prevButton.textContent = "\u2190";
+    prevButton.disabled = currentPage === 1;
+    prevButton.addEventListener("click", ()=>{
+        onPageChange(currentPage - 1);
+    });
+    if (prevButton.disabled) prevButton.style.backgroundColor = "#050505";
+    else prevButton.style.backgroundColor = "#9BB537";
+    const nextButton = document.createElement("button");
+    nextButton.classList.add("next-button");
+    nextButton.textContent = "\u2192";
+    nextButton.disabled = currentPage === totalPages;
+    nextButton.addEventListener("click", ()=>{
+        onPageChange(currentPage + 1);
+    });
+    if (currentPage >= totalPages) {
+        nextButton.disabled = true;
+        nextButton.style.backgroundColor = "#050505";
+        nextButton.style.cursor = "not-allowed";
+    } else {
+        nextButton.disabled = false;
+        nextButton.style.backgroundColor = "#9BB537";
+        nextButton.style.cursor = "pointer";
+    }
+    paginationContainer.appendChild(prevButton);
+    for(let i = 1; i <= totalPages; i++){
+        const pageButton = document.createElement("button");
+        pageButton.textContent = i;
+        pageButton.classList.add("page-button");
+        if (i === currentPage) pageButton.classList.add("active");
+        pageButton.addEventListener("click", ()=>{
+            onPageChange(i);
+        });
+        paginationContainer.appendChild(pageButton);
+    }
+    paginationContainer.appendChild(nextButton);
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./searchRecipes":"ci3Vj"}],"jWbWy":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "sidebar", ()=>sidebar);
@@ -1019,6 +1070,6 @@ const theme = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["cRtnc"], null, "parcelRequire78be", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["ecpW6"], null, "parcelRequire78be", {})
 
-//# sourceMappingURL=favorites.f9e78b9a.js.map
+//# sourceMappingURL=favorites.05b27b46.js.map

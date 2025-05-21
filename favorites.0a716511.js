@@ -686,28 +686,40 @@ document.addEventListener("DOMContentLoaded", function() {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadFavorites", ()=>loadFavorites);
+var _pagination = require("../pagination");
 var _searchRecipes = require("../home/searchRecipes");
+let currentPage = 1;
+const itemsPerPage = 6;
 function loadFavorites() {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const emptyFavorites = document.getElementById("empty-page");
     const recipeResults = document.getElementById("recipe-results");
-    // If no favorites, show the empty page
     if (favorites.length === 0) {
         recipeResults.style.display = "none";
         emptyFavorites.style.display = "flex";
         return;
     }
-    // Show recipe results if there are favorites
     recipeResults.style.display = "flex";
     emptyFavorites.style.display = "none";
-    // Check if favorites array is empty and display a message
     if (!favorites || favorites.length === 0) {
         recipeResults.innerHTML = "<p>No recipes found.</p>";
         return;
     }
-    (0, _searchRecipes.renderRecipes)(favorites);
+    const totalPages = Math.ceil(favorites.length / itemsPerPage);
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    const favoritesPage = favorites.slice(start, end);
+    (0, _searchRecipes.renderRecipes)(favoritesPage, {
+        fromFavoritesPage: true
+    });
+    (0, _pagination.renderPagination)(currentPage, totalPages, (newPage)=>{
+        currentPage = newPage;
+        loadFavorites();
+    });
 }
 
-},{"../home/searchRecipes":"ci3Vj","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["1VbY3","6IVOA"], "6IVOA", "parcelRequire78be", {})
+},{"../pagination":"80yTG","../home/searchRecipes":"ci3Vj","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["1VbY3","6IVOA"], "6IVOA", "parcelRequire78be", {})
 
 //# sourceMappingURL=favorites.0a716511.js.map
