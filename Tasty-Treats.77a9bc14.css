@@ -659,7 +659,6 @@ input::placeholder {
 }
 
 .recipe-card {
-  max-width: 335px;
   position: relative;
 }
 
@@ -909,21 +908,11 @@ input::placeholder {
 
   .recipe-results {
     flex-flow: wrap;
-    justify-content: center;
+    justify-content: left;
     gap: 15px;
+    width: 518px;
+    margin-left: 109px;
     display: flex;
-  }
-
-  .recipe-card {
-    box-sizing: border-box;
-    border-radius: 12px;
-    flex-direction: column;
-    flex: 43%;
-    align-items: center;
-    max-width: 303px;
-    max-height: 203px;
-    display: flex;
-    box-shadow: 0 2px 8px #0000000f;
   }
 
   .recipe-img {
@@ -940,7 +929,7 @@ input::placeholder {
   }
 
   .recipe-card-button {
-    width: 61px;
+    width: 81px;
     margin-left: 9px;
     font-size: 11px;
   }
@@ -1034,12 +1023,14 @@ input::placeholder {
   }
 
   .recipe-card {
-    flex: 30%;
-    max-width: 1260px;
+    max-width: 250px;
+    max-height: 287px;
   }
 
   .recipe-results {
-    row-gap: 102px;
+    justify-content: left;
+    width: 863px;
+    margin-left: 0;
   }
 
   .favorites-button {
@@ -1055,8 +1046,7 @@ input::placeholder {
   }
 
   .details-card-container {
-    width: auto;
-    bottom: -54px;
+    width: 95%;
     left: 1%;
   }
 
@@ -1067,7 +1057,7 @@ input::placeholder {
   .recipe-card-button {
     width: 89px;
     height: 31px;
-    margin-left: 68px;
+    margin-left: 24px;
     font-size: 12px;
   }
 
@@ -1079,7 +1069,7 @@ input::placeholder {
   .pagination-controls {
     position: relative;
     top: 66px;
-    left: 340px;
+    left: 266px;
   }
 }
 /*# sourceMappingURL=Tasty-Treats.77a9bc14.css.map */

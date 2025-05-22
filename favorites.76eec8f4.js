@@ -723,7 +723,7 @@ const renderPagination = (currentPage, totalPages, onPageChange)=>{
     prevButton.addEventListener("click", ()=>{
         onPageChange(currentPage - 1);
     });
-    if (prevButton.disabled) prevButton.style.backgroundColor = "#050505";
+    if (prevButton.disabled) prevButton.style.backgroundColor = "#7a854e";
     else prevButton.style.backgroundColor = "#9BB537";
     const nextButton = document.createElement("button");
     nextButton.classList.add("next-button");
@@ -734,7 +734,7 @@ const renderPagination = (currentPage, totalPages, onPageChange)=>{
     });
     if (currentPage >= totalPages) {
         nextButton.disabled = true;
-        nextButton.style.backgroundColor = "#050505";
+        nextButton.style.backgroundColor = "#7a854e";
         nextButton.style.cursor = "not-allowed";
     } else {
         nextButton.disabled = false;
@@ -765,7 +765,7 @@ var _categoriesDisplay = require("./categoriesDisplay");
 var _pagination = require("../pagination");
 const searchInput = document.getElementById("search-recipes");
 let currentPage = 1;
-const itemsPerPage = 6;
+const itemsPerPage = 9;
 function renderRecipes(recipes, options = {}) {
     const container = document.getElementById("recipe-results");
     const { fromFavoritesPage = false } = options;

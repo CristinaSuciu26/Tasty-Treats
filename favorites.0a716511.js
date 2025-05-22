@@ -689,16 +689,19 @@ parcelHelpers.export(exports, "loadFavorites", ()=>loadFavorites);
 var _pagination = require("../pagination");
 var _searchRecipes = require("../home/searchRecipes");
 let currentPage = 1;
-const itemsPerPage = 6;
+const itemsPerPage = 8;
 function loadFavorites() {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const emptyFavorites = document.getElementById("empty-page");
     const recipeResults = document.getElementById("recipe-results");
+    const favoritesImg = document.getElementById("fav-img");
     if (favorites.length === 0) {
         recipeResults.style.display = "none";
         emptyFavorites.style.display = "flex";
+        favoritesImg.style.display = "none";
         return;
     }
+    favoritesImg.style.display = "flex";
     recipeResults.style.display = "flex";
     emptyFavorites.style.display = "none";
     if (!favorites || favorites.length === 0) {
