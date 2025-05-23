@@ -372,7 +372,7 @@ input:checked + .slider:before {
 .categories-container {
   flex-direction: column;
   gap: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 45px;
   display: flex;
 }
 
@@ -618,14 +618,31 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   gap: 24px;
-  margin-top: 50px;
+  margin-top: 20px;
   display: flex;
 }
 
 .recipe-img {
   border-radius: 8px;
-  width: 335px;
-  height: 335px;
+  height: auto;
+  display: block;
+}
+
+.image-wrapper {
+  border-radius: 8px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay-card {
+  pointer-events: none;
+  background-image: linear-gradient(1deg, #05050599 0%, #05050500 100%);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .favorites-button {
@@ -663,17 +680,17 @@ input::placeholder {
 }
 
 .details-card-container {
+  color: #f8f8f8;
   flex-direction: column;
   gap: 16px;
   padding: 16px;
   display: flex;
   position: absolute;
-  bottom: 16px;
+  bottom: 0;
 }
 
 .recipe-title {
   text-transform: uppercase;
-  color: #f8f8f8;
   font-size: 14px;
   font-weight: 600;
 }
@@ -684,7 +701,6 @@ input::placeholder {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   text-overflow: ellipsis;
-  color: #f8f8f8;
   -webkit-box-orient: vertical;
   font-size: 12px;
   font-weight: 400;
@@ -714,7 +730,7 @@ input::placeholder {
 .rating {
   color: #fff;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   display: flex;
 }
 
@@ -888,6 +904,10 @@ input::placeholder {
     margin-top: 60px;
   }
 
+  .categories-container {
+    margin-bottom: 115px;
+  }
+
   .favorites-button {
     top: 10px;
     left: 72%;
@@ -911,7 +931,7 @@ input::placeholder {
     justify-content: left;
     gap: 15px;
     width: 518px;
-    margin-left: 109px;
+    margin-left: 119px;
     display: flex;
   }
 
@@ -937,6 +957,16 @@ input::placeholder {
   .stars-container {
     width: 45px;
     display: flex;
+  }
+
+  .pagination-wrapper {
+    position: absolute;
+  }
+
+  .pagination-controls {
+    position: relative;
+    top: 1485px;
+    left: 38px;
   }
 }
 
@@ -1046,7 +1076,6 @@ input::placeholder {
   }
 
   .details-card-container {
-    width: 95%;
     left: 1%;
   }
 
@@ -1068,7 +1097,7 @@ input::placeholder {
 
   .pagination-controls {
     position: relative;
-    top: 66px;
+    top: 925px;
     left: 266px;
   }
 }

@@ -93,6 +93,16 @@
     width: 45px;
     display: flex;
   }
+
+  .pagination-controls-fav {
+    position: absolute;
+    top: 577px;
+    left: -103px;
+  }
+
+  .pagination-wrapper-fav {
+    position: absolute;
+  }
 }
 
 @media screen and (width >= 1280px) {
@@ -110,7 +120,6 @@
 
   .recipe-results-fav {
     max-width: 1120px;
-    height: 543px;
   }
 
   .stars-container {
