@@ -309,40 +309,30 @@ input:checked + .slider:before {
   position: relative;
 }
 
-.topic-name {
-  text-transform: uppercase;
-  color: var(--details-color);
-  text-align: center;
-  text-align: center;
-  width: 39%;
-  margin-left: 10px;
-  font-size: 10px;
-  font-weight: 800;
-  position: absolute;
-  top: 267px;
-  left: 129px;
-}
-
 .swiper {
-  width: 100%;
-  max-width: 340px;
-  height: 430px;
-  margin: 32px auto;
-  padding: 10px;
-  overflow: hidden;
+  width: 315px;
+  height: 400px;
 }
 
 .swiper-wrapper {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  transition-property: transform;
+  transition-timing-function: var(--swiper-wrapper-transition-timing-function, initial);
+  box-sizing: content-box;
   display: flex;
+  position: relative;
 }
 
 .swiper-slide {
   flex-direction: row;
   flex-shrink: 0;
-  justify-content: center;
-  align-items: center;
-  height: 360px;
+  width: 100%;
+  height: 100%;
+  transition-property: transform;
   display: flex;
+  position: relative;
 }
 
 .swiper-pagination-bullet {
@@ -356,7 +346,6 @@ input:checked + .slider:before {
 }
 
 .swiper-pagination {
-  margin-bottom: -12px;
   position: absolute;
   bottom: 10px;
 }
@@ -762,23 +751,44 @@ input::placeholder {
   }
 }
 
-.pagination-controls {
+#pagination {
+  justify-content: center;
   align-items: center;
-  gap: 24px;
-  max-width: 310px;
-  height: 100px;
-  margin-top: 60px;
+  gap: 10px;
+  margin-top: 64px;
+  margin-left: -2px;
   display: flex;
 }
 
-.prev-button, .next-button {
-  background-color: var(--text-color);
+.tui-is-selected {
+  background-color: var(--accent-color) !important;
+}
+
+.tui-is-disabled {
+  background-color: #050505 !important;
+}
+
+.tui-ico-ellip {
+  background-color: var(--accent-color) !important;
+}
+
+.tui-pagination .tui-page-btn {
   color: var(--text-color);
   cursor: pointer;
-  border: 1px solid #999;
-  border-radius: 24px;
+  background-color: #0000;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
   width: 44px;
   height: 44px;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  border: 1px solid #999 !important;
+}
+
+.tui-page-btn:hover {
+  background-color: var(--accent-color) !important;
 }
 
 .page-button {
@@ -794,6 +804,29 @@ input::placeholder {
 
 .active {
   background-color: var(--accent-color);
+}
+
+.footer-container {
+  background-color: var(--background);
+  justify-content: center;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  display: flex;
+}
+
+.copyright-container {
+  color: #939393;
+  text-align: center;
+  width: 85%;
+  font-size: 14px;
+  transition: transform .8s;
+}
+
+.copyright-container img {
+  width: 20px;
+  height: 20px;
+  margin-bottom: -4px;
+  animation: 1s infinite pulse;
 }
 
 @media screen and (width >= 768px) {
@@ -842,9 +875,8 @@ input::placeholder {
   }
 
   .hero-container {
-    width: 58%;
-    max-width: 700px;
-    margin-left: 82px;
+    max-width: 768px;
+    padding: 0 82px;
   }
 
   .hero-title h2 {
@@ -861,15 +893,22 @@ input::placeholder {
   }
 
   .swiper {
-    max-width: 740px;
+    width: 749px;
+    height: 550px;
+  }
+
+  .chef-img {
+    width: 182px;
+    height: 455px;
+  }
+
+  .food-img {
+    width: 351px;
+    height: 455px;
   }
 
   #masterclass-list {
     gap: 0;
-  }
-
-  .topic-name {
-    left: 190px;
   }
 
   .categories {
@@ -928,7 +967,6 @@ input::placeholder {
 
   .recipe-results {
     flex-flow: wrap;
-    justify-content: left;
     gap: 15px;
     width: 518px;
     margin-left: 119px;
@@ -959,8 +997,8 @@ input::placeholder {
     display: flex;
   }
 
-  .pagination-wrapper {
-    position: absolute;
+  #pagination {
+    margin-left: 100px;
   }
 
   .pagination-controls {
@@ -968,47 +1006,45 @@ input::placeholder {
     top: 1485px;
     left: 38px;
   }
+
+  .footer-container {
+    background-color: var(--background);
+    justify-content: center;
+    padding-top: 80px;
+    display: flex;
+  }
+
+  .copyright-container {
+    width: 100%;
+    font-size: 14px;
+  }
 }
 
 @media screen and (width >= 1280px) {
+  #pagination {
+    margin-left: 0;
+  }
+
   .header-list {
     font-size: 14px;
   }
 
   .header-container-logo {
-    gap: 475px;
+    gap: 430px;
   }
 
   .hero-container {
     flex-direction: row;
     align-items: center;
-    gap: 21px;
+    gap: 5px;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1360px;
     margin-top: 38px;
     margin-left: 50px;
   }
 
-  .chef-img {
-    width: 182px;
-    height: 455px;
-  }
-
-  .food-img {
-    width: 351px;
-    height: 455px;
-  }
-
   #masterclass-list {
-    gap: 166px;
-  }
-
-  .topic-name {
-    width: 50%;
-    font-size: 14px;
-    font-weight: 500;
-    top: 364px;
-    left: 168px;
+    gap: 185px;
   }
 
   .hero-title {
@@ -1016,8 +1052,7 @@ input::placeholder {
   }
 
   .swiper {
-    max-width: 1200px;
-    height: 490px;
+    width: 1200px;
   }
 
   .search-recipes-container {
@@ -1029,7 +1064,7 @@ input::placeholder {
   }
 
   .search-recipes {
-    align-items: baseline;
+    align-items: center;
     max-width: 1200px;
   }
 
@@ -1058,8 +1093,8 @@ input::placeholder {
   }
 
   .recipe-results {
-    justify-content: left;
-    width: 863px;
+    justify-content: center;
+    width: 803px;
     margin-left: 0;
   }
 
@@ -1093,12 +1128,6 @@ input::placeholder {
   .stars-container {
     width: 75px;
     display: flex;
-  }
-
-  .pagination-controls {
-    position: relative;
-    top: 925px;
-    left: 266px;
   }
 }
 /*# sourceMappingURL=Tasty-Treats.77a9bc14.css.map */

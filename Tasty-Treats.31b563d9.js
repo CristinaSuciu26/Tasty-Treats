@@ -5573,10 +5573,6 @@ function masterClassDisplay(masterClassData) {
         foodImg.src = item.topic.imgUrl;
         foodImg.classList.add("food-img");
         imageContainer.appendChild(foodImg);
-        const topicName = document.createElement("p");
-        topicName.textContent = item.topic.name;
-        topicName.classList.add("topic-name");
-        imageContainer.appendChild(topicName);
         masterClassItem.appendChild(imageContainer);
         masterClassList.appendChild(masterClassItem);
     });
