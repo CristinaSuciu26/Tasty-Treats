@@ -160,7 +160,7 @@
       });
     }
   }
-})({"kauhP":[function(require,module,exports,__globalThis) {
+})({"2Q7Ut":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -168,7 +168,7 @@ var HMR_SERVER_PORT = 1234;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "439701173a9199ea";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "c656000c670d5c14";
+module.bundle.HMR_BUNDLE_ID = "376de3659b1fa447";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_SERVER_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -3034,11 +3034,8 @@ const renderPagination = (currentPage, totalPages, onPageChange, itemsPerPage = 
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "renderRecipes", ()=>renderRecipes);
-parcelHelpers.export(exports, "updateRecipes", ()=>updateRecipes);
-var _fetchData = require("../fetchData");
-var _categoriesDisplay = require("./categoriesDisplay");
 var _pagination = require("../pagination");
-const searchInput = document.getElementById("search-recipes");
+var _updateRecipesJs = require("./updateRecipes.js");
 let currentPage = 1;
 const itemsPerPage = 9;
 function renderRecipes(recipes, options = {}) {
@@ -3150,23 +3147,44 @@ function renderRecipes(recipes, options = {}) {
         container.appendChild(item);
         (0, _pagination.renderPagination)(currentPage, totalPages, (newPage)=>{
             currentPage = newPage;
-            updateRecipes();
+            (0, _updateRecipesJs.updateRecipes)();
         });
     });
 }
+
+},{"../pagination":"80yTG","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./updateRecipes.js":"823Qz"}],"823Qz":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "updateRecipes", ()=>updateRecipes);
+var _fetchData = require("../fetchData");
+var _searchRecipes = require("./searchRecipes");
+var _sharedState = require("./sharedState");
 async function updateRecipes() {
+    const searchInput = document.getElementById("search-recipes");
     const allRecipes = await (0, _fetchData.fetchRecipes)();
     const searchQuery = searchInput?.value?.trim().toLowerCase() || "";
-    const selectedCategory = (0, _categoriesDisplay.getActiveCategory)();
+    const selectedCategory = (0, _sharedState.getActiveCategory)();
+    const selectedRegion = (0, _sharedState.getSelectedRegion)();
+    const selectedIngredient = (0, _sharedState.getSelectedIngredient)();
+    const selectedTime = (0, _sharedState.getSelectedTime)();
+    const allBtn = document.getElementById("all-categories-btn");
+    allBtn.addEventListener("click", ()=>{
+        (0, _sharedState.resetActiveCategory)();
+    });
     let filtered = allRecipes;
+    // Filter by time
+    if (selectedTime) filtered = filtered.filter((r)=>r.time === selectedTime);
+    // filter by ingredient
+    if (selectedIngredient) filtered = filtered.filter((r)=>r.ingredients?.some((ing)=>ing.id === selectedIngredient));
     // Filter by category
     if (selectedCategory) filtered = filtered.filter((r)=>r.category === selectedCategory);
+    if (selectedRegion) filtered = filtered.filter((r)=>r.area === selectedRegion);
     // Filter by search input
     if (searchQuery) filtered = filtered.filter((r)=>r.title.toLowerCase().includes(searchQuery));
-    renderRecipes(filtered);
+    (0, _searchRecipes.renderRecipes)(filtered);
 }
 
-},{"../fetchData":"cte0F","./categoriesDisplay":"7R5vv","../pagination":"80yTG","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cte0F":[function(require,module,exports,__globalThis) {
+},{"../fetchData":"cte0F","./searchRecipes":"ci3Vj","./sharedState":"4qtQs","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cte0F":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "fetchCategories", ()=>fetchCategories);
@@ -3250,52 +3268,54 @@ module.exports = JSON.parse('{"page":1,"perPage":6,"totalPages":48,"results":[{"
 },{}],"hZBA8":[function(require,module,exports,__globalThis) {
 module.exports = JSON.parse("[{\"_id\":\"6462a6f04c3d0ddd28897f9b\",\"name\":\"Ukrainian\"},{\"_id\":\"6462a6f04c3d0ddd28897f9c\",\"name\":\"Italian\"},{\"_id\":\"6462a6f04c3d0ddd28897f9d\",\"name\":\"Moroccan\"},{\"_id\":\"6462a6f04c3d0ddd28897f9e\",\"name\":\"Unknown\"},{\"_id\":\"6462a6f04c3d0ddd28897f9f\",\"name\":\"Thai\"},{\"_id\":\"6462a6f04c3d0ddd28897fa0\",\"name\":\"Irish\"},{\"_id\":\"6462a6f04c3d0ddd28897fa1\",\"name\":\"British\"},{\"_id\":\"6462a6f04c3d0ddd28897fa2\",\"name\":\"Japanese\"},{\"_id\":\"6462a6f04c3d0ddd28897fa3\",\"name\":\"French\"},{\"_id\":\"6462a6f04c3d0ddd28897fa4\",\"name\":\"Indian\"},{\"_id\":\"6462a6f04c3d0ddd28897fa5\",\"name\":\"American\"},{\"_id\":\"6462a6f04c3d0ddd28897fa6\",\"name\":\"Mexican\"},{\"_id\":\"6462a6f04c3d0ddd28897fa7\",\"name\":\"Malaysian\"},{\"_id\":\"6462a6f04c3d0ddd28897fa8\",\"name\":\"Dutch\"},{\"_id\":\"6462a6f04c3d0ddd28897fa9\",\"name\":\"Spanish\"},{\"_id\":\"6462a6f04c3d0ddd28897faa\",\"name\":\"Canadian\"},{\"_id\":\"6462a6f04c3d0ddd28897fab\",\"name\":\"Vietnamese\"},{\"_id\":\"6462a6f04c3d0ddd28897fac\",\"name\":\"Tunisian\"},{\"_id\":\"6462a6f04c3d0ddd28897fad\",\"name\":\"Greek\"},{\"_id\":\"6462a6f04c3d0ddd28897fae\",\"name\":\"Portuguese\"},{\"_id\":\"6462a6f04c3d0ddd28897faf\",\"name\":\"Croatian\"},{\"_id\":\"6462a6f04c3d0ddd28897fb0\",\"name\":\"Chinese\"},{\"_id\":\"6462a6f04c3d0ddd28897fb1\",\"name\":\"Egyptian\"},{\"_id\":\"6462a6f04c3d0ddd28897fb2\",\"name\":\"Jamaican\"},{\"_id\":\"6462a6f04c3d0ddd28897fb3\",\"name\":\"Polish\"},{\"_id\":\"6462a6f04c3d0ddd28897fb4\",\"name\":\"Kenyan\"},{\"_id\":\"6462a6f04c3d0ddd28897fb5\",\"name\":\"Turkish\"}]");
 
-},{}],"7R5vv":[function(require,module,exports,__globalThis) {
+},{}],"4qtQs":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "setActiveCategory", ()=>setActiveCategory);
 parcelHelpers.export(exports, "getActiveCategory", ()=>getActiveCategory);
-parcelHelpers.export(exports, "categoriesListDisplay", ()=>categoriesListDisplay);
-var _fetchData = require("../fetchData");
-var _searchRecipes = require("./searchRecipes");
+parcelHelpers.export(exports, "resetActiveCategory", ()=>resetActiveCategory);
+parcelHelpers.export(exports, "setSelectedRegion", ()=>setSelectedRegion);
+parcelHelpers.export(exports, "getSelectedRegion", ()=>getSelectedRegion);
+parcelHelpers.export(exports, "setSelectedIngredient", ()=>setSelectedIngredient);
+parcelHelpers.export(exports, "getSelectedIngredient", ()=>getSelectedIngredient);
+parcelHelpers.export(exports, "setSelectedTime", ()=>setSelectedTime);
+parcelHelpers.export(exports, "getSelectedTime", ()=>getSelectedTime);
 let activeCategory = "";
+function setActiveCategory(category) {
+    activeCategory = category;
+}
 function getActiveCategory() {
     return activeCategory;
 }
-function categoriesList(categoriesData) {
-    const categoriesListEl = document.getElementById("categories-list");
-    categoriesListEl.innerHTML = "";
-    categoriesData.forEach((element)=>{
-        const listItem = document.createElement("div");
-        listItem.classList.add("categories-item");
-        const categoryBtn = document.createElement("button");
-        categoryBtn.classList.add("category-btn");
-        categoryBtn.textContent = element.name;
-        categoryBtn.addEventListener("click", ()=>{
-            activeCategory = element.name;
-            document.querySelectorAll(".category-btn").forEach((btn)=>btn.classList.remove("active"));
-            categoryBtn.classList.add("active");
-            (0, _searchRecipes.updateRecipes)();
-        });
-        listItem.appendChild(categoryBtn);
-        categoriesListEl.appendChild(listItem);
-    });
+function resetActiveCategory() {
+    activeCategory = "";
+    selectedRegion = "";
+    selectedIngredient = "";
+    selectedTime = "";
 }
-function categoriesListDisplay() {
-    (0, _fetchData.fetchCategories)().then((data)=>{
-        categoriesList(data);
-    }).catch((error)=>{
-        console.error("Error fetching categories:", error);
-    });
-    const allBtn = document.getElementById("all-categories-btn");
-    if (allBtn) allBtn.addEventListener("click", ()=>{
-        activeCategory = "";
-        document.querySelectorAll(".category-btn").forEach((btn)=>btn.classList.remove("active"));
-        allBtn.classList.add("active");
-        (0, _searchRecipes.updateRecipes)();
-    });
+let selectedRegion = "";
+function setSelectedRegion(region) {
+    selectedRegion = region;
+}
+function getSelectedRegion() {
+    return selectedRegion;
+}
+let selectedIngredient = "";
+function setSelectedIngredient(ingredient) {
+    selectedIngredient = ingredient;
+}
+function getSelectedIngredient() {
+    return selectedIngredient;
+}
+let selectedTime = "";
+function setSelectedTime(time) {
+    selectedTime = time;
+}
+function getSelectedTime() {
+    return selectedTime;
 }
 
-},{"../fetchData":"cte0F","./searchRecipes":"ci3Vj","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jWbWy":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"jWbWy":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "sidebar", ()=>sidebar);
@@ -3353,6 +3373,6 @@ const theme = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["kauhP"], null, "parcelRequire78be", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["2Q7Ut"], null, "parcelRequire78be", {})
 
-//# sourceMappingURL=favorites.670d5c14.js.map
+//# sourceMappingURL=favorites.9b1fa447.js.map

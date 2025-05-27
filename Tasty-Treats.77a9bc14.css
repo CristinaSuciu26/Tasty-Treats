@@ -803,7 +803,7 @@ input::placeholder {
 }
 
 .active {
-  background-color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 .footer-container {

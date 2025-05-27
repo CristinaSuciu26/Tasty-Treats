@@ -667,76 +667,368 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 }
 
 },{}],"a0t4e":[function(require,module,exports,__globalThis) {
-var _categoriesDisplay = require("./js/home/categoriesDisplay");
-var _ingredientsDispaly = require("./js/home/ingredientsDispaly");
 var _initFilters = require("./js/home/initFilters");
+var _filterByTime = require("./js/home/filterByTime");
 var _loader = require("./js/loader");
-var _masterclassDisplay = require("./js/home/masterclassDisplay");
 var _orderNowModal = require("./js/home/orderNowModal");
-var _popularRecipesDisplay = require("./js/home/popularRecipesDisplay");
-var _regionsDisplay = require("./js/home/regionsDisplay");
-var _searchRecipes = require("./js/home/searchRecipes");
 var _sidebar = require("./js/sidebar");
 var _theme = require("./js/theme");
+var _updateRecipes = require("./js/home/updateRecipes");
 document.addEventListener("DOMContentLoaded", function() {
     try {
         (0, _loader.showLoader)();
-        (0, _masterclassDisplay.masterClassDisplayInit)();
-        (0, _categoriesDisplay.categoriesListDisplay)();
-        (0, _popularRecipesDisplay.displayPopularRecipes)();
-        (0, _ingredientsDispaly.ingredientListInit)();
-        (0, _regionsDisplay.regionListInit)();
+        (0, _initFilters.masterClassInit)();
+        (0, _initFilters.categoriesListInit)();
+        (0, _initFilters.PopularRecipesInit)();
+        (0, _initFilters.ingredientListInit)();
+        (0, _initFilters.regionListInit)();
         (0, _theme.theme)();
         (0, _sidebar.sidebar)();
         (0, _orderNowModal.orderNowModal)();
-        (0, _initFilters.initFilters)();
-        (0, _searchRecipes.updateRecipes)();
+        (0, _filterByTime.filterByTime)();
+        (0, _updateRecipes.updateRecipes)();
     } catch (error) {
         console.error("Error in script:", error);
     }
 });
 
-},{"./js/home/categoriesDisplay":"7R5vv","./js/home/ingredientsDispaly":"cmdgn","./js/home/initFilters":"ddmC4","./js/loader":"lhsWU","./js/home/masterclassDisplay":"bOSQI","./js/home/orderNowModal":"6K24U","./js/home/popularRecipesDisplay":"fH9xp","./js/home/regionsDisplay":"e5G8Z","./js/home/searchRecipes":"ci3Vj","./js/sidebar":"jWbWy","./js/theme":"6DWc8"}],"cmdgn":[function(require,module,exports,__globalThis) {
+},{"./js/loader":"lhsWU","./js/home/orderNowModal":"6K24U","./js/sidebar":"jWbWy","./js/theme":"6DWc8","./js/home/updateRecipes":"823Qz","./js/home/filterByTime":"hkcHH","./js/home/initFilters":"ddmC4"}],"6K24U":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ingredientListInit", ()=>ingredientListInit);
+parcelHelpers.export(exports, "orderNowModal", ()=>orderNowModal);
+const orderNowModal = ()=>{
+    const modal = document.getElementById("order-now-modal");
+    const openModal = document.getElementById("open-order-now-modal");
+    const closeModal = document.getElementById("close-order-now-modal");
+    openModal.addEventListener("click", ()=>{
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+    });
+    closeModal.addEventListener("click", ()=>{
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"hkcHH":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "filterByTime", ()=>filterByTime);
+var _lodashDebounce = require("lodash.debounce");
+var _lodashDebounceDefault = parcelHelpers.interopDefault(_lodashDebounce);
+var _updateRecipes = require("./updateRecipes");
 var _choicesJs = require("choices.js");
 var _choicesJsDefault = parcelHelpers.interopDefault(_choicesJs);
 var _choicesMinCss = require("choices.js/public/assets/styles/choices.min.css");
-var _fetchData = require("../fetchData");
+var _sharedState = require("./sharedState");
 let choicesInstance;
-function ingredientList(ingredientList) {
-    const ingredientSelect = document.getElementById("search-by-ingredients");
-    // Clear previous options
-    ingredientSelect.innerHTML = "";
-    // Add options from the fetched list
-    ingredientList.forEach((element)=>{
-        const option = document.createElement("option");
-        option.textContent = element.name;
-        option.value = element.name;
-        ingredientSelect.appendChild(option);
-    });
-    // Destroy old instance if needed
+const searchInput = document.getElementById("search-recipes");
+const searchByTime = document.getElementById("search-by-time");
+searchByTime.addEventListener("change", (e)=>{
+    (0, _sharedState.setSelectedTime)(e.target.value);
+    (0, _updateRecipes.updateRecipes)();
+});
+function filterByTime() {
+    if (searchInput) searchInput.addEventListener("input", (0, _lodashDebounceDefault.default)((0, _updateRecipes.updateRecipes), 300));
+    if (searchByTime) searchByTime.addEventListener("change", (0, _updateRecipes.updateRecipes));
     if (choicesInstance) choicesInstance.destroy();
     // Initialize Choices
-    choicesInstance = new (0, _choicesJsDefault.default)(ingredientSelect, {
+    choicesInstance = new (0, _choicesJsDefault.default)(searchByTime, {
         removeItemButton: false,
-        placeholderValue: "Select ingredients",
+        placeholderValue: "Select",
         searchPlaceholderValue: "Type to search",
         searchEnabled: true,
         shouldSort: false,
         duplicateItemsAllowed: false
     });
 }
-function ingredientListInit() {
-    (0, _fetchData.fetchIngredientsList)().then((data)=>{
-        ingredientList(data);
-    }).catch((error)=>{
-        console.error("Error fetching ingredients:", error);
-    });
-}
 
-},{"choices.js":"ip5eZ","choices.js/public/assets/styles/choices.min.css":"i38sz","../fetchData":"cte0F","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"ip5eZ":[function(require,module,exports,__globalThis) {
+},{"lodash.debounce":"irvaP","./updateRecipes":"823Qz","choices.js":"ip5eZ","choices.js/public/assets/styles/choices.min.css":"i38sz","./sharedState":"4qtQs","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"irvaP":[function(require,module,exports,__globalThis) {
+/**
+ * lodash (Custom Build) <https://lodash.com/>
+ * Build: `lodash modularize exports="npm" -o ./`
+ * Copyright jQuery Foundation and other contributors <https://jquery.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */ /** Used as the `TypeError` message for "Functions" methods. */ var global = arguments[3];
+var FUNC_ERROR_TEXT = 'Expected a function';
+/** Used as references for various `Number` constants. */ var NAN = 0 / 0;
+/** `Object#toString` result references. */ var symbolTag = '[object Symbol]';
+/** Used to match leading and trailing whitespace. */ var reTrim = /^\s+|\s+$/g;
+/** Used to detect bad signed hexadecimal string values. */ var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+/** Used to detect binary string values. */ var reIsBinary = /^0b[01]+$/i;
+/** Used to detect octal string values. */ var reIsOctal = /^0o[0-7]+$/i;
+/** Built-in method references without a dependency on `root`. */ var freeParseInt = parseInt;
+/** Detect free variable `global` from Node.js. */ var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+/** Detect free variable `self`. */ var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+/** Used as a reference to the global object. */ var root = freeGlobal || freeSelf || Function('return this')();
+/** Used for built-in method references. */ var objectProto = Object.prototype;
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */ var objectToString = objectProto.toString;
+/* Built-in method references for those with the same name as other `lodash` methods. */ var nativeMax = Math.max, nativeMin = Math.min;
+/**
+ * Gets the timestamp of the number of milliseconds that have elapsed since
+ * the Unix epoch (1 January 1970 00:00:00 UTC).
+ *
+ * @static
+ * @memberOf _
+ * @since 2.4.0
+ * @category Date
+ * @returns {number} Returns the timestamp.
+ * @example
+ *
+ * _.defer(function(stamp) {
+ *   console.log(_.now() - stamp);
+ * }, _.now());
+ * // => Logs the number of milliseconds it took for the deferred invocation.
+ */ var now = function() {
+    return root.Date.now();
+};
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked. The debounced function comes with a `cancel` method to cancel
+ * delayed `func` invocations and a `flush` method to immediately invoke them.
+ * Provide `options` to indicate whether `func` should be invoked on the
+ * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+ * with the last arguments provided to the debounced function. Subsequent
+ * calls to the debounced function return the result of the last `func`
+ * invocation.
+ *
+ * **Note:** If `leading` and `trailing` options are `true`, `func` is
+ * invoked on the trailing edge of the timeout only if the debounced function
+ * is invoked more than once during the `wait` timeout.
+ *
+ * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+ * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+ *
+ * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+ * for details over the differences between `_.debounce` and `_.throttle`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Function
+ * @param {Function} func The function to debounce.
+ * @param {number} [wait=0] The number of milliseconds to delay.
+ * @param {Object} [options={}] The options object.
+ * @param {boolean} [options.leading=false]
+ *  Specify invoking on the leading edge of the timeout.
+ * @param {number} [options.maxWait]
+ *  The maximum time `func` is allowed to be delayed before it's invoked.
+ * @param {boolean} [options.trailing=true]
+ *  Specify invoking on the trailing edge of the timeout.
+ * @returns {Function} Returns the new debounced function.
+ * @example
+ *
+ * // Avoid costly calculations while the window size is in flux.
+ * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+ *
+ * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+ * jQuery(element).on('click', _.debounce(sendMail, 300, {
+ *   'leading': true,
+ *   'trailing': false
+ * }));
+ *
+ * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+ * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+ * var source = new EventSource('/stream');
+ * jQuery(source).on('message', debounced);
+ *
+ * // Cancel the trailing debounced invocation.
+ * jQuery(window).on('popstate', debounced.cancel);
+ */ function debounce(func, wait, options) {
+    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
+    if (typeof func != 'function') throw new TypeError(FUNC_ERROR_TEXT);
+    wait = toNumber(wait) || 0;
+    if (isObject(options)) {
+        leading = !!options.leading;
+        maxing = 'maxWait' in options;
+        maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+        trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+    function invokeFunc(time) {
+        var args = lastArgs, thisArg = lastThis;
+        lastArgs = lastThis = undefined;
+        lastInvokeTime = time;
+        result = func.apply(thisArg, args);
+        return result;
+    }
+    function leadingEdge(time) {
+        // Reset any `maxWait` timer.
+        lastInvokeTime = time;
+        // Start the timer for the trailing edge.
+        timerId = setTimeout(timerExpired, wait);
+        // Invoke the leading edge.
+        return leading ? invokeFunc(time) : result;
+    }
+    function remainingWait(time) {
+        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime, result = wait - timeSinceLastCall;
+        return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+    }
+    function shouldInvoke(time) {
+        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime;
+        // Either this is the first call, activity has stopped and we're at the
+        // trailing edge, the system time has gone backwards and we're treating
+        // it as the trailing edge, or we've hit the `maxWait` limit.
+        return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
+    }
+    function timerExpired() {
+        var time = now();
+        if (shouldInvoke(time)) return trailingEdge(time);
+        // Restart the timer.
+        timerId = setTimeout(timerExpired, remainingWait(time));
+    }
+    function trailingEdge(time) {
+        timerId = undefined;
+        // Only invoke if we have `lastArgs` which means `func` has been
+        // debounced at least once.
+        if (trailing && lastArgs) return invokeFunc(time);
+        lastArgs = lastThis = undefined;
+        return result;
+    }
+    function cancel() {
+        if (timerId !== undefined) clearTimeout(timerId);
+        lastInvokeTime = 0;
+        lastArgs = lastCallTime = lastThis = timerId = undefined;
+    }
+    function flush() {
+        return timerId === undefined ? result : trailingEdge(now());
+    }
+    function debounced() {
+        var time = now(), isInvoking = shouldInvoke(time);
+        lastArgs = arguments;
+        lastThis = this;
+        lastCallTime = time;
+        if (isInvoking) {
+            if (timerId === undefined) return leadingEdge(lastCallTime);
+            if (maxing) {
+                // Handle invocations in a tight loop.
+                timerId = setTimeout(timerExpired, wait);
+                return invokeFunc(lastCallTime);
+            }
+        }
+        if (timerId === undefined) timerId = setTimeout(timerExpired, wait);
+        return result;
+    }
+    debounced.cancel = cancel;
+    debounced.flush = flush;
+    return debounced;
+}
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */ function isObject(value) {
+    var type = typeof value;
+    return !!value && (type == 'object' || type == 'function');
+}
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */ function isObjectLike(value) {
+    return !!value && typeof value == 'object';
+}
+/**
+ * Checks if `value` is classified as a `Symbol` primitive or object.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+ * @example
+ *
+ * _.isSymbol(Symbol.iterator);
+ * // => true
+ *
+ * _.isSymbol('abc');
+ * // => false
+ */ function isSymbol(value) {
+    return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
+}
+/**
+ * Converts `value` to a number.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to process.
+ * @returns {number} Returns the number.
+ * @example
+ *
+ * _.toNumber(3.2);
+ * // => 3.2
+ *
+ * _.toNumber(Number.MIN_VALUE);
+ * // => 5e-324
+ *
+ * _.toNumber(Infinity);
+ * // => Infinity
+ *
+ * _.toNumber('3.2');
+ * // => 3.2
+ */ function toNumber(value) {
+    if (typeof value == 'number') return value;
+    if (isSymbol(value)) return NAN;
+    if (isObject(value)) {
+        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+        value = isObject(other) ? other + '' : other;
+    }
+    if (typeof value != 'string') return value === 0 ? value : +value;
+    value = value.replace(reTrim, '');
+    var isBinary = reIsBinary.test(value);
+    return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+}
+module.exports = debounce;
+
+},{}],"ip5eZ":[function(require,module,exports,__globalThis) {
 /*! choices.js v11.1.0 | © 2025 Josh Johnson | https://github.com/jshjohnson/Choices#readme */ /******************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -5235,28 +5527,130 @@ var selectableChoiceIdentifier = '[data-choice-selectable]';
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"i38sz":[function() {},{}],"ddmC4":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "initFilters", ()=>initFilters);
-var _lodashDebounce = require("lodash.debounce");
-var _lodashDebounceDefault = parcelHelpers.interopDefault(_lodashDebounce);
-var _searchRecipes = require("./searchRecipes");
+parcelHelpers.export(exports, "categoriesListInit", ()=>categoriesListInit);
+parcelHelpers.export(exports, "ingredientListInit", ()=>ingredientListInit);
+parcelHelpers.export(exports, "masterClassInit", ()=>masterClassInit);
+parcelHelpers.export(exports, "PopularRecipesInit", ()=>PopularRecipesInit);
+parcelHelpers.export(exports, "regionListInit", ()=>regionListInit);
+var _fetchData = require("../fetchData");
+var _categoriesDisplay = require("./categoriesDisplay");
+var _ingredientsDispaly = require("./ingredientsDispaly");
+var _masterclassDisplay = require("./masterclassDisplay");
+var _sharedState = require("./sharedState");
+var _updateRecipes = require("./updateRecipes");
+var _swiperJs = require("../swiper.js");
+var _popularRecipesDisplayJs = require("./popularRecipesDisplay.js");
+var _regionsDisplayJs = require("./regionsDisplay.js");
+function categoriesListInit() {
+    (0, _fetchData.fetchCategories)().then((data)=>{
+        (0, _categoriesDisplay.categoriesList)(data);
+    }).catch((error)=>{
+        console.error("Error fetching categories:", error);
+    });
+    const allBtn = document.getElementById("all-categories-btn");
+    if (allBtn) allBtn.addEventListener("click", ()=>{
+        (0, _sharedState.resetActiveCategory)();
+        document.querySelectorAll(".category-btn").forEach((btn)=>btn.classList.remove("active"));
+        allBtn.classList.add("active");
+        (0, _updateRecipes.updateRecipes)();
+    });
+}
+function ingredientListInit() {
+    (0, _fetchData.fetchIngredientsList)().then((data)=>{
+        (0, _ingredientsDispaly.ingredientList)(data);
+    }).catch((error)=>{
+        console.error("Error fetching ingredients:", error);
+    });
+}
+function masterClassInit() {
+    (0, _fetchData.fetchMasterclasses)().then((data)=>{
+        (0, _masterclassDisplay.masterClassDisplay)(data);
+        setTimeout(()=>{
+            const swiper = (0, _swiperJs.slider)();
+            swiper.update();
+        }, 100);
+    }).catch((error)=>{
+        console.error("Error fetching masterclasses:", error);
+    });
+}
+function PopularRecipesInit() {
+    (0, _fetchData.fetchPopularRecipes)().then((data)=>{
+        (0, _popularRecipesDisplayJs.popularRecipes)(data);
+    }).catch((error)=>{
+        console.error("Error fetching recipes:", error);
+    });
+}
+function regionListInit() {
+    (0, _fetchData.fetchRegionsList)().then((data)=>{
+        (0, _regionsDisplayJs.regionList)(data);
+        console.log(data);
+    }).catch((error)=>{
+        console.error("Error fetching regions", error);
+    });
+}
+
+},{"../fetchData":"cte0F","./categoriesDisplay":"7R5vv","./sharedState":"4qtQs","./updateRecipes":"823Qz","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./ingredientsDispaly":"cmdgn","./masterclassDisplay":"bOSQI","../swiper.js":"gCYjv","./popularRecipesDisplay.js":"fH9xp","./regionsDisplay.js":"e5G8Z"}],"7R5vv":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "categoriesList", ()=>categoriesList);
+var _updateRecipes = require("./updateRecipes");
+var _sharedState = require("./sharedState");
+let activeCategory = "";
+function categoriesList(categoriesData) {
+    const categoriesListEl = document.getElementById("categories-list");
+    categoriesListEl.innerHTML = "";
+    categoriesData.forEach((element)=>{
+        const listItem = document.createElement("div");
+        listItem.classList.add("categories-item");
+        const categoryBtn = document.createElement("button");
+        categoryBtn.classList.add("category-btn");
+        categoryBtn.textContent = element.name;
+        categoryBtn.addEventListener("click", (e)=>{
+            (0, _sharedState.setActiveCategory)(element.name);
+            activeCategory = element.name;
+            document.querySelectorAll(".category-btn").forEach((btn)=>btn.classList.remove("active"));
+            categoryBtn.classList.add("active");
+            (0, _updateRecipes.updateRecipes)();
+        });
+        listItem.appendChild(categoryBtn);
+        categoriesListEl.appendChild(listItem);
+    });
+}
+
+},{"./updateRecipes":"823Qz","./sharedState":"4qtQs","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"cmdgn":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ingredientList", ()=>ingredientList);
 var _choicesJs = require("choices.js");
 var _choicesJsDefault = parcelHelpers.interopDefault(_choicesJs);
 var _choicesMinCss = require("choices.js/public/assets/styles/choices.min.css");
+var _sharedState = require("./sharedState");
+var _updateRecipesJs = require("./updateRecipes.js");
 let choicesInstance;
-const searchInput = document.getElementById("search-recipes");
-const searchByTime = document.getElementById("search-by-time");
-const searchByArea = document.getElementById("search-by-area");
-const searchByIngredient = document.getElementById("search-by-ingredients");
-function initFilters() {
-    if (searchInput) searchInput.addEventListener("input", (0, _lodashDebounceDefault.default)((0, _searchRecipes.updateRecipes), 300));
-    if (searchByTime) searchByTime.addEventListener("change", (0, _searchRecipes.updateRecipes));
-    if (searchByArea) searchByArea.addEventListener("change", (0, _searchRecipes.updateRecipes));
-    if (searchByIngredient) searchByIngredient.addEventListener("change", (0, _searchRecipes.updateRecipes));
+let ingredientMap = {};
+function ingredientList(ingredientList) {
+    const ingredientSelect = document.getElementById("search-by-ingredients");
+    ingredientSelect.innerHTML = "";
+    ingredientList.forEach((element)=>{
+        ingredientMap[element.name] = element._id;
+        const option = document.createElement("option");
+        option.textContent = element.name;
+        option.value = element._id;
+        option.dataset.name = element.name;
+        option.value = element.name;
+        ingredientSelect.appendChild(option);
+    });
+    ingredientSelect.addEventListener("change", (e)=>{
+        const name = e.target.value;
+        const id = ingredientMap[name];
+        (0, _sharedState.setSelectedIngredient)(id);
+        (0, _updateRecipesJs.updateRecipes)();
+    });
     if (choicesInstance) choicesInstance.destroy();
     // Initialize Choices
-    choicesInstance = new (0, _choicesJsDefault.default)(searchByTime, {
+    choicesInstance = new (0, _choicesJsDefault.default)(ingredientSelect, {
         removeItemButton: false,
-        placeholderValue: "Select time",
+        placeholderValue: "Select",
         searchPlaceholderValue: "Type to search",
         searchEnabled: true,
         shouldSort: false,
@@ -5264,299 +5658,12 @@ function initFilters() {
     });
 }
 
-},{"lodash.debounce":"irvaP","./searchRecipes":"ci3Vj","choices.js":"ip5eZ","choices.js/public/assets/styles/choices.min.css":"i38sz","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"irvaP":[function(require,module,exports,__globalThis) {
-/**
- * lodash (Custom Build) <https://lodash.com/>
- * Build: `lodash modularize exports="npm" -o ./`
- * Copyright jQuery Foundation and other contributors <https://jquery.org/>
- * Released under MIT license <https://lodash.com/license>
- * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
- * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
- */ /** Used as the `TypeError` message for "Functions" methods. */ var global = arguments[3];
-var FUNC_ERROR_TEXT = 'Expected a function';
-/** Used as references for various `Number` constants. */ var NAN = 0 / 0;
-/** `Object#toString` result references. */ var symbolTag = '[object Symbol]';
-/** Used to match leading and trailing whitespace. */ var reTrim = /^\s+|\s+$/g;
-/** Used to detect bad signed hexadecimal string values. */ var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-/** Used to detect binary string values. */ var reIsBinary = /^0b[01]+$/i;
-/** Used to detect octal string values. */ var reIsOctal = /^0o[0-7]+$/i;
-/** Built-in method references without a dependency on `root`. */ var freeParseInt = parseInt;
-/** Detect free variable `global` from Node.js. */ var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-/** Detect free variable `self`. */ var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-/** Used as a reference to the global object. */ var root = freeGlobal || freeSelf || Function('return this')();
-/** Used for built-in method references. */ var objectProto = Object.prototype;
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */ var objectToString = objectProto.toString;
-/* Built-in method references for those with the same name as other `lodash` methods. */ var nativeMax = Math.max, nativeMin = Math.min;
-/**
- * Gets the timestamp of the number of milliseconds that have elapsed since
- * the Unix epoch (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Date
- * @returns {number} Returns the timestamp.
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => Logs the number of milliseconds it took for the deferred invocation.
- */ var now = function() {
-    return root.Date.now();
-};
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked. The debounced function comes with a `cancel` method to cancel
- * delayed `func` invocations and a `flush` method to immediately invoke them.
- * Provide `options` to indicate whether `func` should be invoked on the
- * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
- * with the last arguments provided to the debounced function. Subsequent
- * calls to the debounced function return the result of the last `func`
- * invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the debounced function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=false]
- *  Specify invoking on the leading edge of the timeout.
- * @param {number} [options.maxWait]
- *  The maximum time `func` is allowed to be delayed before it's invoked.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // Avoid costly calculations while the window size is in flux.
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // Invoke `sendMail` when clicked, debouncing subsequent calls.
- * jQuery(element).on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
- * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', debounced);
- *
- * // Cancel the trailing debounced invocation.
- * jQuery(window).on('popstate', debounced.cancel);
- */ function debounce(func, wait, options) {
-    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime, lastInvokeTime = 0, leading = false, maxing = false, trailing = true;
-    if (typeof func != 'function') throw new TypeError(FUNC_ERROR_TEXT);
-    wait = toNumber(wait) || 0;
-    if (isObject(options)) {
-        leading = !!options.leading;
-        maxing = 'maxWait' in options;
-        maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-        trailing = 'trailing' in options ? !!options.trailing : trailing;
-    }
-    function invokeFunc(time) {
-        var args = lastArgs, thisArg = lastThis;
-        lastArgs = lastThis = undefined;
-        lastInvokeTime = time;
-        result = func.apply(thisArg, args);
-        return result;
-    }
-    function leadingEdge(time) {
-        // Reset any `maxWait` timer.
-        lastInvokeTime = time;
-        // Start the timer for the trailing edge.
-        timerId = setTimeout(timerExpired, wait);
-        // Invoke the leading edge.
-        return leading ? invokeFunc(time) : result;
-    }
-    function remainingWait(time) {
-        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime, result = wait - timeSinceLastCall;
-        return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
-    }
-    function shouldInvoke(time) {
-        var timeSinceLastCall = time - lastCallTime, timeSinceLastInvoke = time - lastInvokeTime;
-        // Either this is the first call, activity has stopped and we're at the
-        // trailing edge, the system time has gone backwards and we're treating
-        // it as the trailing edge, or we've hit the `maxWait` limit.
-        return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
-    }
-    function timerExpired() {
-        var time = now();
-        if (shouldInvoke(time)) return trailingEdge(time);
-        // Restart the timer.
-        timerId = setTimeout(timerExpired, remainingWait(time));
-    }
-    function trailingEdge(time) {
-        timerId = undefined;
-        // Only invoke if we have `lastArgs` which means `func` has been
-        // debounced at least once.
-        if (trailing && lastArgs) return invokeFunc(time);
-        lastArgs = lastThis = undefined;
-        return result;
-    }
-    function cancel() {
-        if (timerId !== undefined) clearTimeout(timerId);
-        lastInvokeTime = 0;
-        lastArgs = lastCallTime = lastThis = timerId = undefined;
-    }
-    function flush() {
-        return timerId === undefined ? result : trailingEdge(now());
-    }
-    function debounced() {
-        var time = now(), isInvoking = shouldInvoke(time);
-        lastArgs = arguments;
-        lastThis = this;
-        lastCallTime = time;
-        if (isInvoking) {
-            if (timerId === undefined) return leadingEdge(lastCallTime);
-            if (maxing) {
-                // Handle invocations in a tight loop.
-                timerId = setTimeout(timerExpired, wait);
-                return invokeFunc(lastCallTime);
-            }
-        }
-        if (timerId === undefined) timerId = setTimeout(timerExpired, wait);
-        return result;
-    }
-    debounced.cancel = cancel;
-    debounced.flush = flush;
-    return debounced;
-}
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */ function isObject(value) {
-    var type = typeof value;
-    return !!value && (type == 'object' || type == 'function');
-}
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */ function isObjectLike(value) {
-    return !!value && typeof value == 'object';
-}
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */ function isSymbol(value) {
-    return typeof value == 'symbol' || isObjectLike(value) && objectToString.call(value) == symbolTag;
-}
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */ function toNumber(value) {
-    if (typeof value == 'number') return value;
-    if (isSymbol(value)) return NAN;
-    if (isObject(value)) {
-        var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-        value = isObject(other) ? other + '' : other;
-    }
-    if (typeof value != 'string') return value === 0 ? value : +value;
-    value = value.replace(reTrim, '');
-    var isBinary = reIsBinary.test(value);
-    return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
-}
-module.exports = debounce;
-
-},{}],"i38sz":[function() {},{}],"bOSQI":[function(require,module,exports,__globalThis) {
+},{"choices.js":"ip5eZ","choices.js/public/assets/styles/choices.min.css":"i38sz","./sharedState":"4qtQs","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./updateRecipes.js":"823Qz"}],"i38sz":[function() {},{}],"bOSQI":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-// Function to initialize the masterclass display
-parcelHelpers.export(exports, "masterClassDisplayInit", ()=>masterClassDisplayInit);
-var _fetchDataJs = require("../fetchData.js");
-var _swiperJs = require("../swiper.js");
 // Function to display the masterclasses on the page
+parcelHelpers.export(exports, "masterClassDisplay", ()=>masterClassDisplay);
+var _fetchDataJs = require("../fetchData.js");
 function masterClassDisplay(masterClassData) {
     const masterClassList = document.getElementById("masterclass-list");
     masterClassData.forEach((item)=>{
@@ -5577,19 +5684,8 @@ function masterClassDisplay(masterClassData) {
         masterClassList.appendChild(masterClassItem);
     });
 }
-function masterClassDisplayInit() {
-    (0, _fetchDataJs.fetchMasterclasses)().then((data)=>{
-        masterClassDisplay(data);
-        setTimeout(()=>{
-            const swiper = (0, _swiperJs.slider)();
-            swiper.update();
-        }, 100);
-    }).catch((error)=>{
-        console.error("Error fetching masterclasses:", error);
-    });
-}
 
-},{"../fetchData.js":"cte0F","../swiper.js":"gCYjv","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"gCYjv":[function(require,module,exports,__globalThis) {
+},{"../fetchData.js":"cte0F","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"gCYjv":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "slider", ()=>slider);
@@ -5621,29 +5717,10 @@ const slider = ()=>{
     return swiper;
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"6K24U":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "orderNowModal", ()=>orderNowModal);
-const orderNowModal = ()=>{
-    const modal = document.getElementById("order-now-modal");
-    const openModal = document.getElementById("open-order-now-modal");
-    const closeModal = document.getElementById("close-order-now-modal");
-    openModal.addEventListener("click", ()=>{
-        modal.style.display = "block";
-        document.body.style.overflow = "hidden";
-    });
-    closeModal.addEventListener("click", ()=>{
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    });
-};
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"fH9xp":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "displayPopularRecipes", ()=>displayPopularRecipes);
-var _fetchData = require("../fetchData");
+parcelHelpers.export(exports, "popularRecipes", ()=>popularRecipes);
 function popularRecipes(recipes) {
     const recipesList = document.getElementById("recipes-list");
     recipes.forEach((recipe)=>{
@@ -5667,22 +5744,16 @@ function popularRecipes(recipes) {
         recipesList.appendChild(recipeItem);
     });
 }
-function displayPopularRecipes() {
-    (0, _fetchData.fetchPopularRecipes)().then((data)=>{
-        popularRecipes(data);
-    }).catch((error)=>{
-        console.error("Error fetching recipes:", error);
-    });
-}
 
-},{"../fetchData":"cte0F","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"e5G8Z":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"e5G8Z":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "regionListInit", ()=>regionListInit);
-var _fetchData = require("../fetchData");
+parcelHelpers.export(exports, "regionList", ()=>regionList);
 var _choicesJs = require("choices.js");
 var _choicesJsDefault = parcelHelpers.interopDefault(_choicesJs);
 var _choicesMinCss = require("choices.js/public/assets/styles/choices.min.css");
+var _updateRecipesJs = require("./updateRecipes.js");
+var _sharedStateJs = require("./sharedState.js");
 let choicesInstance;
 function regionList(regionList) {
     const regionSelect = document.getElementById("search-by-area");
@@ -5694,25 +5765,22 @@ function regionList(regionList) {
         regionItem.value = element.name;
         regionSelect.appendChild(regionItem);
     });
+    regionSelect.addEventListener("change", (e)=>{
+        (0, _sharedStateJs.setSelectedRegion)(e.target.value);
+        (0, _updateRecipesJs.updateRecipes)();
+    });
     if (choicesInstance) choicesInstance.destroy();
     // Initialize Choices
     choicesInstance = new (0, _choicesJsDefault.default)(regionSelect, {
         removeItemButton: false,
-        placeholderValue: "Select area",
+        placeholderValue: "Select",
         searchPlaceholderValue: "Type to search",
         searchEnabled: true,
         shouldSort: false,
         duplicateItemsAllowed: false
     });
 }
-function regionListInit() {
-    (0, _fetchData.fetchRegionsList)().then((data)=>{
-        regionList(data);
-    }).catch((error)=>{
-        console.error("Error fetching regions", error);
-    });
-}
 
-},{"../fetchData":"cte0F","choices.js":"ip5eZ","choices.js/public/assets/styles/choices.min.css":"i38sz","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"i38sz":[function() {},{}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
+},{"choices.js":"ip5eZ","choices.js/public/assets/styles/choices.min.css":"i38sz","./sharedState.js":"4qtQs","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./updateRecipes.js":"823Qz"}],"i38sz":[function() {},{}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
 
 //# sourceMappingURL=Tasty-Treats.31b563d9.js.map
