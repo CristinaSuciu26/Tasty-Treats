@@ -3061,12 +3061,78 @@ function renderRecipes(recipes, options = {}) {
         const item = document.createElement("div");
         item.classList.add("recipe-card");
         const buttonCard = document.createElement("button");
+        buttonCard.id = "see-recipe-btn";
         buttonCard.classList.add("recipe-card-button");
         buttonCard.textContent = "See Recipe";
+        buttonCard.addEventListener("click", ()=>{
+            const modal = document.getElementById("see-recipe-modal");
+            modal.style.display = "block";
+            document.body.style.overflow = "hidden";
+            const modalContent = document.getElementById("see-recipe-content");
+            const imgContainer = document.createElement("div");
+            imgContainer.classList.add("img-container");
+            const imgModal = document.createElement("img");
+            imgModal.src = recipe.thumb;
+            imgContainer.appendChild(imgModal);
+            const modalDetails = document.createElement("div");
+            modalDetails.classList.add("modal-details");
+            imgContainer.appendChild(modalDetails);
+            // Clear previous content and append new image
+            const titleModal = document.createElement("h2");
+            titleModal.classList.add("recipe-title-modal");
+            titleModal.textContent = recipe.title;
+            modalDetails.appendChild(titleModal);
+            const ratingModal = document.createElement("div");
+            ratingModal.classList.add("rating-modal");
+            const ratingValueModal = document.createElement("span");
+            ratingValueModal.classList.add("rating-value-modal");
+            ratingValueModal.textContent = recipe.rating.toFixed(1);
+            ratingModal.appendChild(ratingValueModal);
+            const starsContainerModal = document.createElement("span");
+            starsContainerModal.classList.add("stars-container-modal");
+            // Create stars for modal
+            for(let i = 0; i < Math.round(recipe.rating); i++){
+                const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                star.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                star.setAttribute("width", "20");
+                star.setAttribute("height", "20");
+                star.setAttribute("viewBox", "0 0 24 24");
+                star.setAttribute("fill", "#FFD700");
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.setAttribute("d", "M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.4 8.17L12 18.897l-7.334 3.865 1.4-8.17L.132 9.21l8.2-1.192z");
+                star.appendChild(path);
+                starsContainerModal.appendChild(star);
+            }
+            ratingModal.appendChild(starsContainerModal);
+            modalDetails.appendChild(ratingModal);
+            const timePreparation = document.createElement("p");
+            timePreparation.classList.add("time-preparation");
+            timePreparation.textContent = `${recipe.time} min`;
+            ratingModal.appendChild(timePreparation);
+            const tagsContainer = document.createElement("ul");
+            tagsContainer.classList.add("tags-container");
+            recipe.tags.forEach((tag)=>{
+                const tagItem = document.createElement("li");
+                tagItem.classList.add("tags");
+                tagItem.textContent = `#${tag}`;
+                tagsContainer.appendChild(tagItem);
+                if (!tag) tagItem.style.display = "none";
+            });
+            modalDetails.appendChild(tagsContainer);
+            const descriptionModal = document.createElement("p");
+            descriptionModal.classList.add("description-modal");
+            descriptionModal.textContent = recipe.description;
+            modalDetails.appendChild(descriptionModal);
+            // to keep the close button but remove the previous content
+            const closeBtn = document.getElementById("close-see-recipe-modal");
+            const modalButtons = document.getElementById("modal-buttons");
+            modalContent.replaceChildren(closeBtn, modalButtons);
+            modalContent.appendChild(imgContainer);
+        });
         // Favorite button and SVG heart
-        const button = document.createElement("button");
-        button.classList.add("favorites-button");
-        button.id = "favorite-btn";
+        const favoriteButton = document.createElement("button");
+        favoriteButton.classList.add("favorites-button");
+        favoriteButton.id = "favorite-btn";
         const heart = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         heart.setAttribute("xmlns", "http://www.w3.org/2000/svg");
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -3076,16 +3142,16 @@ function renderRecipes(recipes, options = {}) {
         const isFavorite = favorites.some((fav)=>fav.id === recipe.id);
         path.setAttribute("fill", isFavorite ? "red" : "white");
         heart.appendChild(path);
-        button.appendChild(heart);
+        favoriteButton.appendChild(heart);
         //  Toggle favorite on click
-        button.addEventListener("click", function() {
+        favoriteButton.addEventListener("click", function() {
             const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
             const isFavorite = favorites.some((fav)=>fav.id === recipe.id);
             if (isFavorite) {
                 const updated = favorites.filter((fav)=>fav.id !== recipe.id);
                 localStorage.setItem("favorites", JSON.stringify(updated));
                 path.setAttribute("fill", "white");
-                if (fromFavoritesPage) button.closest(".recipe-card")?.remove();
+                if (fromFavoritesPage) favoriteButton.closest(".recipe-card")?.remove();
             } else {
                 favorites.push(recipe);
                 localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -3142,7 +3208,7 @@ function renderRecipes(recipes, options = {}) {
         buttonContainer.appendChild(buttonCard);
         rating.appendChild(buttonContainer);
         item.appendChild(imageWrapper);
-        item.appendChild(button);
+        item.appendChild(favoriteButton);
         item.appendChild(detailsContainer);
         container.appendChild(item);
         (0, _pagination.renderPagination)(currentPage, totalPages, (newPage)=>{
@@ -3152,7 +3218,7 @@ function renderRecipes(recipes, options = {}) {
     });
 }
 
-},{"../pagination":"80yTG","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","./updateRecipes.js":"823Qz"}],"823Qz":[function(require,module,exports,__globalThis) {
+},{"../pagination":"80yTG","./updateRecipes.js":"823Qz","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"823Qz":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateRecipes", ()=>updateRecipes);
