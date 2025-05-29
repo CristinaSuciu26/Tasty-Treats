@@ -5783,19 +5783,6 @@ const orderNowModal = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"4ueMn":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "seeRecipeModal", ()=>seeRecipeModal);
-const seeRecipeModal = ()=>{
-    const modal = document.getElementById("see-recipe-modal");
-    const closeModal = document.getElementById("close-see-recipe-modal");
-    closeModal.addEventListener("click", ()=>{
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
-    });
-};
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
 
 //# sourceMappingURL=Tasty-Treats.31b563d9.js.map

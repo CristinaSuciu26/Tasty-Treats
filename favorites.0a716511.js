@@ -671,18 +671,20 @@ var _loaderJs = require("../loader.js");
 var _loadFavoritesJs = require("./loadFavorites.js");
 var _sidebarJs = require("../sidebar.js");
 var _themeJs = require("../theme.js");
+var _seeRecipeModalJs = require("../seeRecipeModal.js");
 document.addEventListener("DOMContentLoaded", function() {
     try {
         (0, _loaderJs.showLoader)();
         (0, _loadFavoritesJs.loadFavorites)();
         (0, _themeJs.theme)();
         (0, _sidebarJs.sidebar)();
+        (0, _seeRecipeModalJs.seeRecipeModal)();
     } catch (error) {
         console.error("Error in script:", error);
     }
 });
 
-},{"../loader.js":"lhsWU","./loadFavorites.js":"hWpL7","../sidebar.js":"jWbWy","../theme.js":"6DWc8"}],"hWpL7":[function(require,module,exports,__globalThis) {
+},{"../loader.js":"lhsWU","./loadFavorites.js":"hWpL7","../sidebar.js":"jWbWy","../theme.js":"6DWc8","../seeRecipeModal.js":"4ueMn"}],"hWpL7":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadFavorites", ()=>loadFavorites);
