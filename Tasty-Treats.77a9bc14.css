@@ -1143,6 +1143,20 @@ input::placeholder {
     left: 38px;
   }
 
+  .see-recipe-content {
+    width: 531px;
+  }
+
+  .img-container img {
+    object-fit: cover;
+    width: 467px;
+    height: 250px;
+  }
+
+  .modal-buttons {
+    margin-right: 155px;
+  }
+
   .footer-container {
     background-color: var(--background);
     justify-content: center;
