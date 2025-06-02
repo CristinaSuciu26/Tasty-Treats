@@ -5789,7 +5789,7 @@ const orderNowModal = ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ratingModal", ()=>ratingModal);
-const ratingModal = (recipe)=>{
+const ratingModal = ()=>{
     const modal = document.getElementById("rating-modal");
     const seeRecipeModal = document.getElementById("see-recipe-modal");
     const openButton = document.getElementById("rating-btn");
@@ -5797,6 +5797,24 @@ const ratingModal = (recipe)=>{
     const stars = document.querySelectorAll("#star-rating .star");
     const ratingValue = document.getElementById("rating-value");
     const ratingData = document.getElementById("rating-data");
+    const form = document.getElementById("rating-form");
+    const ratingContainer = document.getElementById("rating-container");
+    const inputForm = document.getElementById("rating-email");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // ⬅️ This prevents the page from reloading
+        const message = document.createElement("p");
+        setTimeout(()=>{
+            message.textContent = "Rating submitted successfully!";
+            message.classList.add("success-message");
+            ratingContainer.appendChild(message);
+            inputForm.value = "";
+            stars.forEach((s)=>{
+                ratingData.textContent = `0.0`;
+                ratingValue.value = 0;
+                s.classList.remove("active");
+            });
+        }, 100);
+    });
     stars.forEach((star)=>{
         star.addEventListener("click", ()=>{
             const value = parseInt(star.getAttribute("data-value"));
