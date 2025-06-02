@@ -675,6 +675,7 @@ var _sidebar = require("./js/sidebar");
 var _theme = require("./js/theme");
 var _updateRecipes = require("./js/home/updateRecipes");
 var _seeRecipeModal = require("./js/seeRecipeModal");
+var _ratingModal = require("./js/ratingModal");
 document.addEventListener("DOMContentLoaded", function() {
     try {
         (0, _loader.showLoader)();
@@ -687,6 +688,7 @@ document.addEventListener("DOMContentLoaded", function() {
         (0, _sidebar.sidebar)();
         (0, _orderNowModal.orderNowModal)();
         (0, _seeRecipeModal.seeRecipeModal)();
+        (0, _ratingModal.ratingModal)();
         (0, _filterByTime.filterByTime)();
         (0, _updateRecipes.updateRecipes)();
     } catch (error) {
@@ -694,7 +696,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-},{"./js/home/initFilters":"ddmC4","./js/home/filterByTime":"hkcHH","./js/loader":"lhsWU","./js/home/orderNowModal":"6K24U","./js/sidebar":"jWbWy","./js/theme":"6DWc8","./js/home/updateRecipes":"823Qz","./js/seeRecipeModal":"4ueMn"}],"ddmC4":[function(require,module,exports,__globalThis) {
+},{"./js/home/initFilters":"ddmC4","./js/home/filterByTime":"hkcHH","./js/loader":"lhsWU","./js/home/orderNowModal":"6K24U","./js/sidebar":"jWbWy","./js/theme":"6DWc8","./js/home/updateRecipes":"823Qz","./js/seeRecipeModal":"4ueMn","./js/ratingModal":"ejvV0"}],"ddmC4":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "categoriesListInit", ()=>categoriesListInit);
@@ -5780,6 +5782,48 @@ const orderNowModal = ()=>{
     closeModal.addEventListener("click", ()=>{
         modal.style.display = "none";
         document.body.style.overflow = "auto";
+    });
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"ejvV0":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ratingModal", ()=>ratingModal);
+const ratingModal = (recipe)=>{
+    const modal = document.getElementById("rating-modal");
+    const seeRecipeModal = document.getElementById("see-recipe-modal");
+    const openButton = document.getElementById("rating-btn");
+    const closeButton = document.getElementById("close-rating-modal");
+    const stars = document.querySelectorAll("#star-rating .star");
+    const ratingValue = document.getElementById("rating-value");
+    const ratingData = document.getElementById("rating-data");
+    stars.forEach((star)=>{
+        star.addEventListener("click", ()=>{
+            const value = parseInt(star.getAttribute("data-value"));
+            ratingValue.value = value;
+            stars.forEach((s)=>s.classList.remove("active"));
+            // Add "active" to the clicked and all before it
+            stars.forEach((s)=>{
+                if (parseInt(s.getAttribute("data-value")) <= value) {
+                    s.classList.add("active");
+                    ratingData.textContent = `0.${value}`;
+                } else s.classList.remove("active");
+            });
+        });
+    });
+    openButton.addEventListener("click", ()=>{
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+        if (seeRecipeModal.style.display === "block") seeRecipeModal.style.display = "none";
+    });
+    closeButton.addEventListener("click", ()=>{
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+        stars.forEach((s)=>{
+            ratingData.textContent = `0.0`;
+            ratingValue.value = 0;
+            s.classList.remove("active");
+        });
     });
 };
 

@@ -3467,7 +3467,8 @@ const seeRecipeModal = ()=>{
     const closeModal = document.getElementById("close-see-recipe-modal");
     closeModal.addEventListener("click", ()=>{
         modal.style.display = "none";
-        document.body.style.overflow = "auto";
+        if (modal.style.display === "none") document.body.style.overflow = "auto";
+        else document.body.style.overflow = "hidden";
     });
 };
 
