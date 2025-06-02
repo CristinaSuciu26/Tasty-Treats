@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=en><script type=module src=/Tasty-Treats/favorites.01ffa9c7.js></script><link rel=stylesheet href=/Tasty-Treats/favorites.db80aa57.css><meta name=viewport content="width=device-width, initial-scale=1.0"><title>Tasty Treats</title><link rel=icon href=/Tasty-Treats/favicon.a2cfe231.ico type=image/x-icon><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel=stylesheet><link rel=stylesheet href=/Tasty-Treats/Tasty-Treats.b6730eb6.css><link rel=stylesheet href=/Tasty-Treats/favorites.a78e29e9.css><body>
+<!DOCTYPE html><html lang=en><script type=module src=/Tasty-Treats/favorites.7d09af8c.js></script><link rel=stylesheet href=/Tasty-Treats/favorites.db80aa57.css><meta name=viewport content="width=device-width, initial-scale=1.0"><title>Tasty Treats</title><link rel=icon href=/Tasty-Treats/favicon.a2cfe231.ico type=image/x-icon><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel=stylesheet><link rel=stylesheet href=/Tasty-Treats/Tasty-Treats.b6730eb6.css><link rel=stylesheet href=/Tasty-Treats/favorites.a78e29e9.css><body>
     <header class=header>
       <div class=header-container>
         <div class="header-container-logo light" id=light-theme-logo>
@@ -83,11 +83,33 @@
         <img src=/Tasty-Treats/close-black.d94ef0ed.svg alt=close-button class=close-see-recipe-modal id=close-see-recipe-modal>
 
         <div class=modal-buttons id=modal-buttons>
-          <button id=remove-btn class=remove-btn>
-              </button>
+          <button id=remove-btn class=remove-btn></button>
 
           <button id=rating-btn class=rating-btn>Give a rating</button>
         </div>
+      </div>
+    </div>
+    <div class=rating-modal id=rating-modal>
+      <div class=rating-modal-content id=rating-modal-content>
+        <img src=/Tasty-Treats/close-black.d94ef0ed.svg alt=close-button class=close-rating-modal id=close-rating-modal>
+        <div class=rating-container id=rating-container>
+          <h3>Rating</h3>
+          <div class=star-rating id=star-rating>
+            <span id=rating-data>0.0</span>
+            <span class=star data-value=1>★</span>
+            <span class=star data-value=2>★</span>
+            <span class=star data-value=3>★</span>
+            <span class=star data-value=4>★</span>
+            <span class=star data-value=5>★</span>
+          </div>
+          <input type=hidden id=rating-value name=rating value=0>
+        </div>
+
+        <form class=rating-form id=rating-form>
+          <label for=email></label>
+          <input type=email id=rating-email name=email placeholder="Enter your email" required>
+          <button class=rating-modal-btn>Send</button>
+        </form>
       </div>
     </div>
     <footer class=footer-container>
@@ -99,6 +121,6 @@
         </p>
       </div>
     </footer>
-    <script type=module src=/Tasty-Treats/favorites.ee596ce3.js></script>
+    <script type=module src=/Tasty-Treats/favorites.04b52b4f.js></script>
   
 

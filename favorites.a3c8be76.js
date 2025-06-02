@@ -160,7 +160,7 @@
       });
     }
   }
-})({"ejv2L":[function(require,module,exports,__globalThis) {
+})({"3lbfE":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -168,7 +168,7 @@ var HMR_SERVER_PORT = 1234;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "439701173a9199ea";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "dd1899e106f380de";
+module.bundle.HMR_BUNDLE_ID = "22e19bfda3c8be76";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_SERVER_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -3472,6 +3472,68 @@ const seeRecipeModal = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["ejv2L"], null, "parcelRequire78be", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"ejvV0":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ratingModal", ()=>ratingModal);
+const ratingModal = ()=>{
+    const modal = document.getElementById("rating-modal");
+    const seeRecipeModal = document.getElementById("see-recipe-modal");
+    const openButton = document.getElementById("rating-btn");
+    const closeButton = document.getElementById("close-rating-modal");
+    const stars = document.querySelectorAll("#star-rating .star");
+    const ratingValue = document.getElementById("rating-value");
+    const ratingData = document.getElementById("rating-data");
+    const form = document.getElementById("rating-form");
+    const ratingContainer = document.getElementById("rating-container");
+    const inputForm = document.getElementById("rating-email");
+    const message = document.createElement("p");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // ⬅️ This prevents the page from reloading
+        setTimeout(()=>{
+            message.textContent = "Rating submitted successfully!";
+            message.classList.add("success-message");
+            ratingContainer.appendChild(message);
+            inputForm.value = "";
+            stars.forEach((s)=>{
+                ratingData.textContent = `0.0`;
+                ratingValue.value = 0;
+                s.classList.remove("active");
+            });
+        }, 100);
+    });
+    stars.forEach((star)=>{
+        star.addEventListener("click", ()=>{
+            const value = parseInt(star.getAttribute("data-value"));
+            ratingValue.value = value;
+            stars.forEach((s)=>s.classList.remove("active"));
+            // Add "active" to the clicked and all before it
+            stars.forEach((s)=>{
+                if (parseInt(s.getAttribute("data-value")) <= value) {
+                    s.classList.add("active");
+                    ratingData.textContent = `0.${value}`;
+                } else s.classList.remove("active");
+            });
+        });
+    });
+    openButton.addEventListener("click", ()=>{
+        modal.style.display = "block";
+        document.body.style.overflow = "hidden";
+        if (seeRecipeModal.style.display === "block") seeRecipeModal.style.display = "none";
+    });
+    closeButton.addEventListener("click", ()=>{
+        modal.style.display = "none";
+        document.body.style.overflow = "auto";
+        // message.style.display = "none";
+        ratingContainer.removeChild(message);
+        stars.forEach((s)=>{
+            ratingData.textContent = `0.0`;
+            ratingValue.value = 0;
+            s.classList.remove("active");
+        });
+    });
+};
 
-//# sourceMappingURL=favorites.06f380de.js.map
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["3lbfE"], null, "parcelRequire78be", {})
+
+//# sourceMappingURL=favorites.a3c8be76.js.map
