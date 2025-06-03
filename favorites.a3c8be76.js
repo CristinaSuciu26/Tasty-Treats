@@ -3489,7 +3489,7 @@ const ratingModal = ()=>{
     const inputForm = document.getElementById("rating-email");
     const message = document.createElement("p");
     form.addEventListener("submit", function(event) {
-        event.preventDefault(); // ⬅️ This prevents the page from reloading
+        event.preventDefault();
         setTimeout(()=>{
             message.textContent = "Rating submitted successfully!";
             message.classList.add("success-message");
@@ -3501,6 +3501,11 @@ const ratingModal = ()=>{
                 s.classList.remove("active");
             });
         }, 100);
+        setTimeout(()=>{
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+            ratingContainer.removeChild(message);
+        }, 2000);
     });
     stars.forEach((star)=>{
         star.addEventListener("click", ()=>{
@@ -3524,7 +3529,6 @@ const ratingModal = ()=>{
     closeButton.addEventListener("click", ()=>{
         modal.style.display = "none";
         document.body.style.overflow = "auto";
-        // message.style.display = "none";
         ratingContainer.removeChild(message);
         stars.forEach((s)=>{
             ratingData.textContent = `0.0`;

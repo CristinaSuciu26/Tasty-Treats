@@ -914,13 +914,14 @@ input::placeholder {
 .remove-btn, .rating-btn {
   cursor: pointer;
   border-radius: 15px;
-  padding: 10px 20px;
+  padding: 10px 15px;
 }
 
 .remove-btn {
   background-color: var(--accent-color);
   color: #fff;
   border: none;
+  width: 180px;
   transition: background-color .4s;
 }
 
