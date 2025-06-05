@@ -3041,6 +3041,8 @@ const itemsPerPage = 9;
 function renderRecipes(recipes, options = {}) {
     const container = document.getElementById("recipe-results");
     const { fromFavoritesPage = false } = options;
+    const paginationContainer = document.getElementById("pagination");
+    if (paginationContainer) paginationContainer.style.display = "flex";
     const totalPages = Math.ceil(recipes.length / itemsPerPage);
     if (currentPage > totalPages) currentPage = totalPages;
     if (currentPage < 1) currentPage = 1;
@@ -3053,7 +3055,12 @@ function renderRecipes(recipes, options = {}) {
     }
     container.innerHTML = "";
     if (!recipes || recipes.length === 0) {
-        container.innerHTML = "<p>No recipes found.</p>";
+        const noResultMessage = document.createElement("p");
+        noResultMessage.textContent = "We couldn\u2019t find a match \u2014 try adjusting your filters for more results.";
+        noResultMessage.classList.add("no-result");
+        container.appendChild(noResultMessage);
+        const paginationContainer = document.getElementById("pagination");
+        if (paginationContainer) paginationContainer.style.display = "none";
         return;
     }
     currentRecipes.forEach((recipe)=>{
@@ -3232,7 +3239,9 @@ function renderRecipes(recipes, options = {}) {
         container.appendChild(item);
         (0, _pagination.renderPagination)(currentPage, totalPages, (newPage)=>{
             currentPage = newPage;
-            (0, _updateRecipesJs.updateRecipes)();
+            setTimeout(()=>{
+                (0, _updateRecipesJs.updateRecipes)();
+            }, 300);
         });
     });
 }
