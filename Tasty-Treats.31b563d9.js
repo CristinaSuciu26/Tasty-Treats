@@ -674,7 +674,6 @@ var _orderNowModal = require("./js/home/orderNowModal");
 var _sidebar = require("./js/sidebar");
 var _theme = require("./js/theme");
 var _updateRecipes = require("./js/home/updateRecipes");
-var _seeRecipeModal = require("./js/seeRecipeModal");
 var _ratingModal = require("./js/ratingModal");
 document.addEventListener("DOMContentLoaded", function() {
     try {
@@ -687,7 +686,6 @@ document.addEventListener("DOMContentLoaded", function() {
         (0, _theme.theme)();
         (0, _sidebar.sidebar)();
         (0, _orderNowModal.orderNowModal)();
-        (0, _seeRecipeModal.seeRecipeModal)();
         (0, _ratingModal.ratingModal)();
         (0, _filterByTime.filterByTime)();
         (0, _updateRecipes.updateRecipes)();
@@ -696,7 +694,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-},{"./js/home/initFilters":"ddmC4","./js/home/filterByTime":"hkcHH","./js/loader":"lhsWU","./js/home/orderNowModal":"6K24U","./js/sidebar":"jWbWy","./js/theme":"6DWc8","./js/home/updateRecipes":"823Qz","./js/seeRecipeModal":"4ueMn","./js/ratingModal":"ejvV0"}],"ddmC4":[function(require,module,exports,__globalThis) {
+},{"./js/home/initFilters":"ddmC4","./js/home/filterByTime":"hkcHH","./js/loader":"lhsWU","./js/home/orderNowModal":"6K24U","./js/sidebar":"jWbWy","./js/theme":"6DWc8","./js/home/updateRecipes":"823Qz","./js/ratingModal":"ejvV0"}],"ddmC4":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "categoriesListInit", ()=>categoriesListInit);
@@ -825,9 +823,11 @@ const slider = ()=>{
         spaceBetween: 20,
         loop: true,
         autoplay: {
-            delay: 3000,
+            delay: 2000,
             disableOnInteraction: false
         },
+        speed: 700,
+        effect: 'slide',
         pagination: {
             el: ".swiper-pagination",
             clickable: true
@@ -5442,20 +5442,47 @@ module.exports = debounce;
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "orderNowModal", ()=>orderNowModal);
+var _toastifyJs = require("toastify-js");
+var _toastifyJsDefault = parcelHelpers.interopDefault(_toastifyJs);
 const orderNowModal = ()=>{
     const modal = document.getElementById("order-now-modal");
     const openModal = document.getElementById("open-order-now-modal");
     const closeModal = document.getElementById("close-order-now-modal");
+    const modalContent = document.querySelector(".order-now-content");
+    const form = document.getElementById("order-now-form");
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        modalContent.classList.add("hide");
+        (0, _toastifyJsDefault.default)({
+            text: "Order submitted successfully!",
+            duration: 3000,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)"
+            }
+        }).showToast();
+        setTimeout(()=>{
+            modal.style.display = "none";
+            modalContent.classList.remove("hide");
+            document.body.style.overflow = "auto";
+        }, 300);
+    });
     openModal.addEventListener("click", ()=>{
+        modalContent.classList.remove("hide");
+        modalContent.classList.add("show");
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
     });
     closeModal.addEventListener("click", ()=>{
-        modal.style.display = "none";
-        document.body.style.overflow = "auto";
+        modalContent.classList.remove("show");
+        modalContent.classList.add("hide");
+        setTimeout(()=>{
+            modal.style.display = "none";
+            modalContent.classList.remove("hide");
+            document.body.style.overflow = "auto";
+        }, 300);
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","toastify-js":"33QEN"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
 
 //# sourceMappingURL=Tasty-Treats.31b563d9.js.map

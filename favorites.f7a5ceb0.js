@@ -160,7 +160,7 @@
       });
     }
   }
-})({"3lbfE":[function(require,module,exports,__globalThis) {
+})({"dmRGk":[function(require,module,exports,__globalThis) {
 var global = arguments[3];
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -168,7 +168,7 @@ var HMR_SERVER_PORT = 1234;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "439701173a9199ea";
 var HMR_USE_SSE = false;
-module.bundle.HMR_BUNDLE_ID = "22e19bfda3c8be76";
+module.bundle.HMR_BUNDLE_ID = "1e2ee72ef7a5ceb0";
 "use strict";
 /* global HMR_HOST, HMR_PORT, HMR_SERVER_PORT, HMR_ENV_HASH, HMR_SECURE, HMR_USE_SSE, chrome, browser, __parcel__import__, __parcel__importScripts__, ServiceWorkerGlobalScope */ /*::
 import type {
@@ -3065,96 +3065,6 @@ function renderRecipes(recipes, options = {}) {
     }
     currentRecipes.forEach((recipe)=>{
         if (!recipe.id) recipe.id = `${recipe.title}-${recipe.category}`.replace(/\s+/g, "-").toLowerCase();
-        const item = document.createElement("div");
-        item.classList.add("recipe-card");
-        const buttonCard = document.createElement("button");
-        buttonCard.id = "see-recipe-btn";
-        buttonCard.classList.add("recipe-card-button");
-        buttonCard.textContent = "See Recipe";
-        buttonCard.addEventListener("click", ()=>{
-            const modal = document.getElementById("see-recipe-modal");
-            modal.style.display = "block";
-            document.body.style.overflow = "hidden";
-            const modalContent = document.getElementById("see-recipe-content");
-            const imgContainer = document.createElement("div");
-            imgContainer.classList.add("img-container");
-            const imgModal = document.createElement("img");
-            imgModal.src = recipe.thumb;
-            imgContainer.appendChild(imgModal);
-            const modalDetails = document.createElement("div");
-            modalDetails.classList.add("modal-details");
-            imgContainer.appendChild(modalDetails);
-            // Clear previous content and append new image
-            const titleModal = document.createElement("h2");
-            titleModal.classList.add("recipe-title-modal");
-            titleModal.textContent = recipe.title;
-            modalDetails.appendChild(titleModal);
-            const ratingModal = document.createElement("div");
-            ratingModal.classList.add("rating-modal");
-            const ratingValueModal = document.createElement("span");
-            ratingValueModal.classList.add("rating-value-modal");
-            ratingValueModal.textContent = recipe.rating.toFixed(1);
-            ratingModal.appendChild(ratingValueModal);
-            const starsContainerModal = document.createElement("span");
-            starsContainerModal.classList.add("stars-container-modal");
-            // Create stars for modal
-            for(let i = 0; i < Math.round(recipe.rating); i++){
-                const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                star.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-                star.setAttribute("width", "20");
-                star.setAttribute("height", "20");
-                star.setAttribute("viewBox", "0 0 24 24");
-                star.setAttribute("fill", "#FFD700");
-                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                path.setAttribute("d", "M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.4 8.17L12 18.897l-7.334 3.865 1.4-8.17L.132 9.21l8.2-1.192z");
-                star.appendChild(path);
-                starsContainerModal.appendChild(star);
-            }
-            ratingModal.appendChild(starsContainerModal);
-            modalDetails.appendChild(ratingModal);
-            const timePreparation = document.createElement("p");
-            timePreparation.classList.add("time-preparation");
-            timePreparation.textContent = `${recipe.time} min`;
-            ratingModal.appendChild(timePreparation);
-            const tagsContainer = document.createElement("ul");
-            tagsContainer.classList.add("tags-container");
-            recipe.tags.forEach((tag)=>{
-                const tagItem = document.createElement("li");
-                tagItem.classList.add("tags");
-                tagItem.textContent = `#${tag}`;
-                tagsContainer.appendChild(tagItem);
-                if (!tag) tagItem.style.display = "none";
-            });
-            modalDetails.appendChild(tagsContainer);
-            const descriptionModal = document.createElement("p");
-            descriptionModal.classList.add("description-modal");
-            descriptionModal.textContent = recipe.description;
-            modalDetails.appendChild(descriptionModal);
-            // to keep the close button but remove the previous content
-            const closeBtn = document.getElementById("close-see-recipe-modal");
-            const modalButtons = document.getElementById("modal-buttons");
-            const removeOrAddBtn = document.getElementById("remove-btn");
-            const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-            const isFavorite = favorites.some((fav)=>fav.id === recipe.id);
-            removeOrAddBtn.textContent = isFavorite ? "Remove from Favorites" : "Add to Favorites";
-            removeOrAddBtn.onclick = function() {
-                const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-                const isFavorite = favorites.some((fav)=>fav.id === recipe.id);
-                if (isFavorite) {
-                    const updated = favorites.filter((fav)=>fav.id !== recipe.id);
-                    localStorage.setItem("favorites", JSON.stringify(updated));
-                    removeOrAddBtn.textContent = "Add to Favorites";
-                    path.setAttribute("fill", "white");
-                } else {
-                    favorites.push(recipe);
-                    localStorage.setItem("favorites", JSON.stringify(favorites));
-                    removeOrAddBtn.textContent = "Remove from Favorites";
-                    path.setAttribute("fill", "red");
-                }
-            };
-            modalContent.replaceChildren(closeBtn, modalButtons);
-            modalContent.appendChild(imgContainer);
-        });
         // Favorite button and SVG heart
         const favoriteButton = document.createElement("button");
         favoriteButton.classList.add("favorites-button");
@@ -3224,6 +3134,15 @@ function renderRecipes(recipes, options = {}) {
         // Round rating to nearest whole number for full stars
         const fullStars = Math.round(recipe.rating);
         for(let i = 0; i < fullStars; i++)starsContainer.appendChild(createStar());
+        const buttonCard = document.createElement("button");
+        buttonCard.addEventListener("click", ()=>{
+            see(recipe); // pass the recipe data
+        });
+        buttonCard.id = "see-recipe-btn";
+        buttonCard.classList.add("recipe-card-button");
+        buttonCard.textContent = "See Recipe";
+        const item = document.createElement("div");
+        item.classList.add("recipe-card");
         const buttonContainer = document.createElement("div");
         const detailsContainer = document.createElement("div");
         rating.appendChild(starsContainer);
@@ -3474,10 +3393,98 @@ parcelHelpers.export(exports, "seeRecipeModal", ()=>seeRecipeModal);
 const seeRecipeModal = ()=>{
     const modal = document.getElementById("see-recipe-modal");
     const closeModal = document.getElementById("close-see-recipe-modal");
+    const modalContent = document.getElementById("see-recipe-content");
+    modal.style.display = "block";
+    document.body.style.overflow = "hidden";
+    modalContent.classList.remove("hide");
+    modalContent.classList.add("show");
+    const imgContainer = document.createElement("div");
+    imgContainer.classList.add("img-container");
+    const imgModal = document.createElement("img");
+    imgModal.src = recipe.thumb;
+    imgContainer.appendChild(imgModal);
+    const modalDetails = document.createElement("div");
+    modalDetails.classList.add("modal-details");
+    imgContainer.appendChild(modalDetails);
+    // Clear previous content and append new image
+    const titleModal = document.createElement("h2");
+    titleModal.classList.add("recipe-title-modal");
+    titleModal.textContent = recipe.title;
+    modalDetails.appendChild(titleModal);
+    const ratingModal = document.createElement("div");
+    ratingModal.classList.add("rating-modal");
+    const ratingValueModal = document.createElement("span");
+    ratingValueModal.classList.add("rating-value-modal");
+    ratingValueModal.textContent = recipe.rating.toFixed(1);
+    ratingModal.appendChild(ratingValueModal);
+    const starsContainerModal = document.createElement("span");
+    starsContainerModal.classList.add("stars-container-modal");
+    // Create stars for modal
+    for(let i = 0; i < Math.round(recipe.rating); i++){
+        const star = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        star.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        star.setAttribute("width", "20");
+        star.setAttribute("height", "20");
+        star.setAttribute("viewBox", "0 0 24 24");
+        star.setAttribute("fill", "#FFD700");
+        const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path1.setAttribute("d", "M12 .587l3.668 7.431 8.2 1.192-5.934 5.782 1.4 8.17L12 18.897l-7.334 3.865 1.4-8.17L.132 9.21l8.2-1.192z");
+        star.appendChild(path1);
+        starsContainerModal.appendChild(star);
+    }
+    ratingModal.appendChild(starsContainerModal);
+    modalDetails.appendChild(ratingModal);
+    const timePreparation = document.createElement("p");
+    timePreparation.classList.add("time-preparation");
+    timePreparation.textContent = `${recipe.time} min`;
+    ratingModal.appendChild(timePreparation);
+    const tagsContainer = document.createElement("ul");
+    tagsContainer.classList.add("tags-container");
+    recipe.tags.forEach((tag)=>{
+        const tagItem = document.createElement("li");
+        tagItem.classList.add("tags");
+        tagItem.textContent = `#${tag}`;
+        tagsContainer.appendChild(tagItem);
+        if (!tag) tagItem.style.display = "none";
+    });
+    modalDetails.appendChild(tagsContainer);
+    const descriptionModal = document.createElement("p");
+    descriptionModal.classList.add("description-modal");
+    descriptionModal.textContent = recipe.description;
+    modalDetails.appendChild(descriptionModal);
+    // to keep the close button but remove the previous content
+    const closeBtn = document.getElementById("close-see-recipe-modal");
+    const modalButtons = document.getElementById("modal-buttons");
+    const removeOrAddBtn = document.getElementById("remove-btn");
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const isFavorite = favorites.some((fav)=>fav.id === recipe.id);
+    removeOrAddBtn.textContent = isFavorite ? "Remove from Favorites" : "Add to Favorites";
+    removeOrAddBtn.onclick = function() {
+        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const isFavorite = favorites.some((fav)=>fav.id === recipe.id);
+        if (isFavorite) {
+            const updated = favorites.filter((fav)=>fav.id !== recipe.id);
+            localStorage.setItem("favorites", JSON.stringify(updated));
+            removeOrAddBtn.textContent = "Add to Favorites";
+            path.setAttribute("fill", "white");
+        } else {
+            favorites.push(recipe);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            removeOrAddBtn.textContent = "Remove from Favorites";
+            path.setAttribute("fill", "red");
+        }
+    };
+    modalContent.replaceChildren(closeBtn, modalButtons);
+    modalContent.appendChild(imgContainer);
     closeModal.addEventListener("click", ()=>{
-        modal.style.display = "none";
-        if (modal.style.display === "none") document.body.style.overflow = "auto";
-        else document.body.style.overflow = "hidden";
+        // modal.style.display = "none";
+        modalContent.classList.remove("show");
+        modalContent.classList.add("hide");
+        setTimeout(()=>{
+            modal.style.display = "none";
+            modalContent.classList.remove("hide");
+            document.body.style.overflow = "auto";
+        }, 300);
     });
 };
 
@@ -3485,6 +3492,9 @@ const seeRecipeModal = ()=>{
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ratingModal", ()=>ratingModal);
+var _toastifyJs = require("toastify-js");
+var _toastifyJsDefault = parcelHelpers.interopDefault(_toastifyJs);
+var _toastifyCss = require("toastify-js/src/toastify.css");
 const ratingModal = ()=>{
     const modal = document.getElementById("rating-modal");
     const modalContent = document.querySelector(".rating-modal-content");
@@ -3500,7 +3510,7 @@ const ratingModal = ()=>{
     const message = document.createElement("p");
     form.addEventListener("submit", function(event) {
         event.preventDefault();
-        if (stars.length === 0 || ratingValue.value === "0") Toasti({
+        if (stars.length === 0 || ratingValue.value === "0") (0, _toastifyJsDefault.default)({
             text: "Please select a rating before submitting.",
             duration: 3000,
             style: {
@@ -3508,7 +3518,7 @@ const ratingModal = ()=>{
             }
         }).showToast();
         else {
-            Toastify({
+            (0, _toastifyJsDefault.default)({
                 text: "Rating submitted successfully!",
                 duration: 3000,
                 style: {
@@ -3565,6 +3575,296 @@ const ratingModal = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["3lbfE"], null, "parcelRequire78be", {})
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","toastify-js":"33QEN","toastify-js/src/toastify.css":"943FW"}],"33QEN":[function(require,module,exports,__globalThis) {
+/*!
+ * Toastify js 1.12.0
+ * https://github.com/apvarun/toastify-js
+ * @license MIT licensed
+ *
+ * Copyright (C) 2018 Varun A P
+ */ (function(root, factory) {
+    if (module.exports) module.exports = factory();
+    else root.Toastify = factory();
+})(this, function(global) {
+    // Object initialization
+    var Toastify = function(options) {
+        // Returning a new init object
+        return new Toastify.lib.init(options);
+    }, // Library version
+    version = "1.12.0";
+    // Set the default global options
+    Toastify.defaults = {
+        oldestFirst: true,
+        text: "Toastify is awesome!",
+        node: undefined,
+        duration: 3000,
+        selector: undefined,
+        callback: function() {},
+        destination: undefined,
+        newWindow: false,
+        close: false,
+        gravity: "toastify-top",
+        positionLeft: false,
+        position: '',
+        backgroundColor: '',
+        avatar: "",
+        className: "",
+        stopOnFocus: true,
+        onClick: function() {},
+        offset: {
+            x: 0,
+            y: 0
+        },
+        escapeMarkup: true,
+        ariaLive: 'polite',
+        style: {
+            background: ''
+        }
+    };
+    // Defining the prototype of the object
+    Toastify.lib = Toastify.prototype = {
+        toastify: version,
+        constructor: Toastify,
+        // Initializing the object with required parameters
+        init: function(options) {
+            // Verifying and validating the input object
+            if (!options) options = {};
+            // Creating the options object
+            this.options = {};
+            this.toastElement = null;
+            // Validating the options
+            this.options.text = options.text || Toastify.defaults.text; // Display message
+            this.options.node = options.node || Toastify.defaults.node; // Display content as node
+            this.options.duration = options.duration === 0 ? 0 : options.duration || Toastify.defaults.duration; // Display duration
+            this.options.selector = options.selector || Toastify.defaults.selector; // Parent selector
+            this.options.callback = options.callback || Toastify.defaults.callback; // Callback after display
+            this.options.destination = options.destination || Toastify.defaults.destination; // On-click destination
+            this.options.newWindow = options.newWindow || Toastify.defaults.newWindow; // Open destination in new window
+            this.options.close = options.close || Toastify.defaults.close; // Show toast close icon
+            this.options.gravity = options.gravity === "bottom" ? "toastify-bottom" : Toastify.defaults.gravity; // toast position - top or bottom
+            this.options.positionLeft = options.positionLeft || Toastify.defaults.positionLeft; // toast position - left or right
+            this.options.position = options.position || Toastify.defaults.position; // toast position - left or right
+            this.options.backgroundColor = options.backgroundColor || Toastify.defaults.backgroundColor; // toast background color
+            this.options.avatar = options.avatar || Toastify.defaults.avatar; // img element src - url or a path
+            this.options.className = options.className || Toastify.defaults.className; // additional class names for the toast
+            this.options.stopOnFocus = options.stopOnFocus === undefined ? Toastify.defaults.stopOnFocus : options.stopOnFocus; // stop timeout on focus
+            this.options.onClick = options.onClick || Toastify.defaults.onClick; // Callback after click
+            this.options.offset = options.offset || Toastify.defaults.offset; // toast offset
+            this.options.escapeMarkup = options.escapeMarkup !== undefined ? options.escapeMarkup : Toastify.defaults.escapeMarkup;
+            this.options.ariaLive = options.ariaLive || Toastify.defaults.ariaLive;
+            this.options.style = options.style || Toastify.defaults.style;
+            if (options.backgroundColor) this.options.style.background = options.backgroundColor;
+            // Returning the current object for chaining functions
+            return this;
+        },
+        // Building the DOM element
+        buildToast: function() {
+            // Validating if the options are defined
+            if (!this.options) throw "Toastify is not initialized";
+            // Creating the DOM object
+            var divElement = document.createElement("div");
+            divElement.className = "toastify on " + this.options.className;
+            // Positioning toast to left or right or center
+            if (!!this.options.position) divElement.className += " toastify-" + this.options.position;
+            else // To be depreciated in further versions
+            if (this.options.positionLeft === true) {
+                divElement.className += " toastify-left";
+                console.warn('Property `positionLeft` will be depreciated in further versions. Please use `position` instead.');
+            } else // Default position
+            divElement.className += " toastify-right";
+            // Assigning gravity of element
+            divElement.className += " " + this.options.gravity;
+            if (this.options.backgroundColor) // This is being deprecated in favor of using the style HTML DOM property
+            console.warn('DEPRECATION NOTICE: "backgroundColor" is being deprecated. Please use the "style.background" property.');
+            // Loop through our style object and apply styles to divElement
+            for(var property in this.options.style)divElement.style[property] = this.options.style[property];
+            // Announce the toast to screen readers
+            if (this.options.ariaLive) divElement.setAttribute('aria-live', this.options.ariaLive);
+            // Adding the toast message/node
+            if (this.options.node && this.options.node.nodeType === Node.ELEMENT_NODE) // If we have a valid node, we insert it
+            divElement.appendChild(this.options.node);
+            else {
+                if (this.options.escapeMarkup) divElement.innerText = this.options.text;
+                else divElement.innerHTML = this.options.text;
+                if (this.options.avatar !== "") {
+                    var avatarElement = document.createElement("img");
+                    avatarElement.src = this.options.avatar;
+                    avatarElement.className = "toastify-avatar";
+                    if (this.options.position == "left" || this.options.positionLeft === true) // Adding close icon on the left of content
+                    divElement.appendChild(avatarElement);
+                    else // Adding close icon on the right of content
+                    divElement.insertAdjacentElement("afterbegin", avatarElement);
+                }
+            }
+            // Adding a close icon to the toast
+            if (this.options.close === true) {
+                // Create a span for close element
+                var closeElement = document.createElement("button");
+                closeElement.type = "button";
+                closeElement.setAttribute("aria-label", "Close");
+                closeElement.className = "toast-close";
+                closeElement.innerHTML = "&#10006;";
+                // Triggering the removal of toast from DOM on close click
+                closeElement.addEventListener("click", (function(event) {
+                    event.stopPropagation();
+                    this.removeElement(this.toastElement);
+                    window.clearTimeout(this.toastElement.timeOutValue);
+                }).bind(this));
+                //Calculating screen width
+                var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+                // Adding the close icon to the toast element
+                // Display on the right if screen width is less than or equal to 360px
+                if ((this.options.position == "left" || this.options.positionLeft === true) && width > 360) // Adding close icon on the left of content
+                divElement.insertAdjacentElement("afterbegin", closeElement);
+                else // Adding close icon on the right of content
+                divElement.appendChild(closeElement);
+            }
+            // Clear timeout while toast is focused
+            if (this.options.stopOnFocus && this.options.duration > 0) {
+                var self = this;
+                // stop countdown
+                divElement.addEventListener("mouseover", function(event) {
+                    window.clearTimeout(divElement.timeOutValue);
+                });
+                // add back the timeout
+                divElement.addEventListener("mouseleave", function() {
+                    divElement.timeOutValue = window.setTimeout(function() {
+                        // Remove the toast from DOM
+                        self.removeElement(divElement);
+                    }, self.options.duration);
+                });
+            }
+            // Adding an on-click destination path
+            if (typeof this.options.destination !== "undefined") divElement.addEventListener("click", (function(event) {
+                event.stopPropagation();
+                if (this.options.newWindow === true) window.open(this.options.destination, "_blank");
+                else window.location = this.options.destination;
+            }).bind(this));
+            if (typeof this.options.onClick === "function" && typeof this.options.destination === "undefined") divElement.addEventListener("click", (function(event) {
+                event.stopPropagation();
+                this.options.onClick();
+            }).bind(this));
+            // Adding offset
+            if (typeof this.options.offset === "object") {
+                var x = getAxisOffsetAValue("x", this.options);
+                var y = getAxisOffsetAValue("y", this.options);
+                var xOffset = this.options.position == "left" ? x : "-" + x;
+                var yOffset = this.options.gravity == "toastify-top" ? y : "-" + y;
+                divElement.style.transform = "translate(" + xOffset + "," + yOffset + ")";
+            }
+            // Returning the generated element
+            return divElement;
+        },
+        // Displaying the toast
+        showToast: function() {
+            // Creating the DOM object for the toast
+            this.toastElement = this.buildToast();
+            // Getting the root element to with the toast needs to be added
+            var rootElement;
+            if (typeof this.options.selector === "string") rootElement = document.getElementById(this.options.selector);
+            else if (this.options.selector instanceof HTMLElement || typeof ShadowRoot !== 'undefined' && this.options.selector instanceof ShadowRoot) rootElement = this.options.selector;
+            else rootElement = document.body;
+            // Validating if root element is present in DOM
+            if (!rootElement) throw "Root element is not defined";
+            // Adding the DOM element
+            var elementToInsert = Toastify.defaults.oldestFirst ? rootElement.firstChild : rootElement.lastChild;
+            rootElement.insertBefore(this.toastElement, elementToInsert);
+            // Repositioning the toasts in case multiple toasts are present
+            Toastify.reposition();
+            if (this.options.duration > 0) this.toastElement.timeOutValue = window.setTimeout((function() {
+                // Remove the toast from DOM
+                this.removeElement(this.toastElement);
+            }).bind(this), this.options.duration); // Binding `this` for function invocation
+            // Supporting function chaining
+            return this;
+        },
+        hideToast: function() {
+            if (this.toastElement.timeOutValue) clearTimeout(this.toastElement.timeOutValue);
+            this.removeElement(this.toastElement);
+        },
+        // Removing the element from the DOM
+        removeElement: function(toastElement) {
+            // Hiding the element
+            // toastElement.classList.remove("on");
+            toastElement.className = toastElement.className.replace(" on", "");
+            // Removing the element from DOM after transition end
+            window.setTimeout((function() {
+                // remove options node if any
+                if (this.options.node && this.options.node.parentNode) this.options.node.parentNode.removeChild(this.options.node);
+                // Remove the element from the DOM, only when the parent node was not removed before.
+                if (toastElement.parentNode) toastElement.parentNode.removeChild(toastElement);
+                // Calling the callback function
+                this.options.callback.call(toastElement);
+                // Repositioning the toasts again
+                Toastify.reposition();
+            }).bind(this), 400); // Binding `this` for function invocation
+        }
+    };
+    // Positioning the toasts on the DOM
+    Toastify.reposition = function() {
+        // Top margins with gravity
+        var topLeftOffsetSize = {
+            top: 15,
+            bottom: 15
+        };
+        var topRightOffsetSize = {
+            top: 15,
+            bottom: 15
+        };
+        var offsetSize = {
+            top: 15,
+            bottom: 15
+        };
+        // Get all toast messages on the DOM
+        var allToasts = document.getElementsByClassName("toastify");
+        var classUsed;
+        // Modifying the position of each toast element
+        for(var i = 0; i < allToasts.length; i++){
+            // Getting the applied gravity
+            if (containsClass(allToasts[i], "toastify-top") === true) classUsed = "toastify-top";
+            else classUsed = "toastify-bottom";
+            var height = allToasts[i].offsetHeight;
+            classUsed = classUsed.substr(9, classUsed.length - 1);
+            // Spacing between toasts
+            var offset = 15;
+            var width = window.innerWidth > 0 ? window.innerWidth : screen.width;
+            // Show toast in center if screen with less than or equal to 360px
+            if (width <= 360) {
+                // Setting the position
+                allToasts[i].style[classUsed] = offsetSize[classUsed] + "px";
+                offsetSize[classUsed] += height + offset;
+            } else if (containsClass(allToasts[i], "toastify-left") === true) {
+                // Setting the position
+                allToasts[i].style[classUsed] = topLeftOffsetSize[classUsed] + "px";
+                topLeftOffsetSize[classUsed] += height + offset;
+            } else {
+                // Setting the position
+                allToasts[i].style[classUsed] = topRightOffsetSize[classUsed] + "px";
+                topRightOffsetSize[classUsed] += height + offset;
+            }
+        }
+        // Supporting function chaining
+        return this;
+    };
+    // Helper function to get offset.
+    function getAxisOffsetAValue(axis, options) {
+        if (options.offset[axis]) {
+            if (isNaN(options.offset[axis])) return options.offset[axis];
+            else return options.offset[axis] + 'px';
+        }
+        return '0px';
+    }
+    function containsClass(elem, yourClass) {
+        if (!elem || typeof yourClass !== "string") return false;
+        else if (elem.className && elem.className.trim().split(/\s+/gi).indexOf(yourClass) > -1) return true;
+        else return false;
+    }
+    // Setting up the prototype for the init object
+    Toastify.lib.init.prototype = Toastify.lib;
+    // Returning the Toastify function to be assigned to the window object/module
+    return Toastify;
+});
 
-//# sourceMappingURL=favorites.a3c8be76.js.map
+},{}],"943FW":[function() {},{}]},["dmRGk"], null, "parcelRequire78be", {})
+
+//# sourceMappingURL=favorites.f7a5ceb0.js.map

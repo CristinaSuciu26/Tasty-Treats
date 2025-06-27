@@ -671,7 +671,6 @@ var _loaderJs = require("../loader.js");
 var _loadFavoritesJs = require("./loadFavorites.js");
 var _sidebarJs = require("../sidebar.js");
 var _themeJs = require("../theme.js");
-var _seeRecipeModalJs = require("../seeRecipeModal.js");
 var _ratingModalJs = require("../ratingModal.js");
 document.addEventListener("DOMContentLoaded", function() {
     try {
@@ -679,14 +678,13 @@ document.addEventListener("DOMContentLoaded", function() {
         (0, _loadFavoritesJs.loadFavorites)();
         (0, _themeJs.theme)();
         (0, _sidebarJs.sidebar)();
-        (0, _seeRecipeModalJs.seeRecipeModal)();
         (0, _ratingModalJs.ratingModal)();
     } catch (error) {
         console.error("Error in script:", error);
     }
 });
 
-},{"../loader.js":"lhsWU","./loadFavorites.js":"hWpL7","../sidebar.js":"jWbWy","../theme.js":"6DWc8","../seeRecipeModal.js":"4ueMn","../ratingModal.js":"ejvV0"}],"hWpL7":[function(require,module,exports,__globalThis) {
+},{"../loader.js":"lhsWU","./loadFavorites.js":"hWpL7","../sidebar.js":"jWbWy","../theme.js":"6DWc8","../ratingModal.js":"ejvV0"}],"hWpL7":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loadFavorites", ()=>loadFavorites);

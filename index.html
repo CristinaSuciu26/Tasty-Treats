@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang=en><script type=module src=favorites.793dd66c.js></script><link rel=stylesheet href=Tasty-Treats.a1d68e7e.css><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>Tasty Treats</title><link rel=icon href=favicon.a2cfe231.ico type=image/x-icon><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css><link href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css rel=stylesheet><link rel=stylesheet href=Tasty-Treats.a0110e60.css><body overflow-x=hidden>
+<!DOCTYPE html><html lang=en><script type=module src=favorites.46d3370e.js></script><link rel=stylesheet href=Tasty-Treats.1b2ed0ec.css><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>Tasty Treats</title><link rel=icon href=favicon.a2cfe231.ico type=image/x-icon><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css><link href=https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css rel=stylesheet><link rel=stylesheet href=Tasty-Treats.0fd71cb5.css><body>
     <header class=header>
       <div class=header-container>
         <div class="header-container-logo light" id=light-theme-logo>
@@ -7,11 +7,11 @@
             <a href=favorites.html>Favorites</a>
           </div>
           <a href=index.html>
-            <img src=logo.14db68ec.svg alt=logo id=home width=83px height=18px></a>
+            <img src=logo.14db68ec.svg alt=logo id=home width=83 height=18>
+          </a>
           <div class=header-icons>
-            <img src=shopping-cart.82fd3564.svg alt=logo>
-            <img src=burger-menu.ee09b074.svg alt=burger-menu id=open-sidebar>
-
+            <img src=shopping-cart.82fd3564.svg alt="shopping cart">
+            <img src=burger-menu.ee09b074.svg alt="burger menu" id=open-sidebar>
             <label class=theme-switch>
               <input type=checkbox id=theme-toggle-light>
               <span class=slider></span>
@@ -76,31 +76,29 @@
 
         <div class=swiper>
           <div class=swiper-wrapper id=masterclass-list></div>
-
           <div class=swiper-pagination></div>
         </div>
       </div>
 
       <div class=order-now-modal id=order-now-modal>
         <div class=order-now-content>
-          <img src=close-black.d94ef0ed.svg alt=close-button class=close-order-now-modal id=close-order-now-modal>
-
+          <img src=close-black.d94ef0ed.svg alt="close button" class=close-order-now-modal id=close-order-now-modal>
           <h3>Order now</h3>
           <form class=order-now-form id=order-now-form>
             <label for=name>Name</label>
             <input id=name name=name required pattern=[A-Za-z\s]+>
             <label for=phone>Phone number</label>
-            <input type=tel id=phone required pattern=\d{10}>
+            <input type=tel id=phone required>
             <label for=email>Email</label>
-            <input type=email id=email name=email required pattern=[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$>
+            <input type=email id=email name=email required>
             <label for=text>Comment</label>
             <textarea id=text name=text rows=4></textarea>
-
             <button class=send-order-btn>Send</button>
           </form>
         </div>
       </div>
     </section>
+
     <section class=categories>
       <div class=categories-wrapper>
         <div class=categories-container>
@@ -118,6 +116,7 @@
           </ul>
         </div>
       </div>
+
       <div class=search-recipes>
         <div class=search-recipes-container>
           <div class=search-recipes-wrapper>
@@ -163,37 +162,33 @@
             </div>
             <div class=select-wrapper>
               <label for=search-by-ingredients>Ingredients</label>
-              <select id=search-by-ingredients style=max-height:200px;overflow-y:auto>
-                
-              </select>
+              <select id=search-by-ingredients style=max-height:200px;overflow-y:auto></select>
             </div>
           </div>
         </div>
-        <div id=recipe-results class=recipe-results>
-          
-        </div>
 
+        <div id=recipe-results class=recipe-results></div>
         <div id=pagination class=tui-pagination></div>
       </div>
     </section>
+
     <div class=loader-overlay id=loader>
       <div class=spinner></div>
     </div>
 
     <div class=see-recipe-modal id=see-recipe-modal>
       <div class=see-recipe-content id=see-recipe-content>
-        <img src=close-black.d94ef0ed.svg alt=close-button class=close-see-recipe-modal id=close-see-recipe-modal>
-
+        <img src=close-black.d94ef0ed.svg alt="close button" class=close-see-recipe-modal id=close-see-recipe-modal>
         <div class=modal-buttons id=modal-buttons>
           <button id=remove-btn class=remove-btn>Add to favorites</button>
-
           <button id=rating-btn class=rating-btn>Give a rating</button>
         </div>
       </div>
     </div>
+
     <div class=rating-modal id=rating-modal>
       <div class=rating-modal-content id=rating-modal-content>
-        <img src=close-black.d94ef0ed.svg alt=close-button class=close-rating-modal id=close-rating-modal>
+        <img src=close-black.d94ef0ed.svg alt="close button" class=close-rating-modal id=close-rating-modal>
         <div class=rating-container id=rating-container>
           <h3>Rating</h3>
           <div class=star-rating id=star-rating>
@@ -208,12 +203,13 @@
         </div>
 
         <form class=rating-form id=rating-form>
-          <label for=email></label>
+          <label for=rating-email></label>
           <input type=email id=rating-email name=email placeholder="Enter your email" required>
           <button class=rating-modal-btn>Send</button>
         </form>
       </div>
     </div>
+
     <footer class=footer-container>
       <div class=copyright-container>
         <p>
@@ -223,7 +219,8 @@
         </p>
       </div>
     </footer>
+
     <script src=https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js></script>
-    <script type=module src=Tasty-Treats.4587bba4.js></script>
+    <script type=module src=Tasty-Treats.947cb23c.js></script>
   
 

@@ -236,6 +236,14 @@ input:checked + .slider:before {
   transform: translate(-50%, -50%);
 }
 
+.order-now-content.show {
+  animation: .4s forwards fadeInScale;
+}
+
+.order-now-content.hide {
+  animation: .3s forwards fadeOutScale;
+}
+
 .order-now-content h3 {
   text-transform: uppercase;
   text-align: left;
@@ -255,11 +263,20 @@ input:checked + .slider:before {
   display: flex;
 }
 
-.order-now-form input, .order-now-form textarea {
+.order-now-form input {
   border: 1px solid #05050533;
   border-radius: 15px;
   width: 260px;
   height: 48px;
+  padding-left: 10px;
+}
+
+.order-now-form textarea {
+  border: 1px solid #05050533;
+  border-radius: 15px;
+  width: 260px;
+  height: 48px;
+  padding: 5px 10px 10px;
 }
 
 .send-order-btn {
@@ -685,7 +702,10 @@ input::placeholder {
 .details-card-container {
   color: #f8f8f8;
   flex-direction: column;
+  align-items: baseline;
   gap: 16px;
+  margin-left: -94px;
+  margin-right: 145px;
   padding: 16px;
   display: flex;
   position: absolute;
@@ -848,6 +868,14 @@ input::placeholder {
   left: 50%;
   overflow: hidden;
   transform: translate(-50%, -50%);
+}
+
+.see-recipe-content.show {
+  animation: .4s forwards fadeInScale;
+}
+
+.see-recipe-content.hide {
+  animation: .3s forwards fadeOutScale;
 }
 
 .close-see-recipe-modal {
@@ -1028,6 +1056,7 @@ input::placeholder {
 }
 
 .rating-container {
+  color: #050505;
   margin-top: 15px;
 }
 
@@ -1059,12 +1088,6 @@ input::placeholder {
   border-radius: 15px;
   width: 295px;
   height: 46px;
-}
-
-.success-message {
-  color: var(--accent-color);
-  font-size: 14px;
-  font-weight: 600;
 }
 
 .star-rating {
@@ -1237,6 +1260,8 @@ input::placeholder {
 
   .details-card-container {
     width: 100%;
+    margin-left: -38px;
+    padding: 25px;
   }
 
   .recipe-title {
