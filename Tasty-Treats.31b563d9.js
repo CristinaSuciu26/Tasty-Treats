@@ -823,10 +823,10 @@ const slider = ()=>{
         spaceBetween: 20,
         loop: true,
         autoplay: {
-            delay: 2000,
+            delay: 1500,
             disableOnInteraction: false
         },
-        speed: 700,
+        speed: 500,
         effect: 'slide',
         pagination: {
             el: ".swiper-pagination",
@@ -5483,6 +5483,6 @@ const orderNowModal = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT","toastify-js":"33QEN"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
+},{"toastify-js":"33QEN","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire78be", {})
 
 //# sourceMappingURL=Tasty-Treats.31b563d9.js.map
