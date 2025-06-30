@@ -3,16 +3,16 @@ export const sidebar = () => {
   const closeSidebar = document.getElementById("close-sidebar");
   const openSidebarButtons = document.querySelectorAll("#open-sidebar");
 
-  openSidebarButtons.forEach(button => {
+  openSidebarButtons.forEach((button) => {
     button.addEventListener("click", function () {
       sidebar.style.display = "flex";
-      console.log("openSidebar clicked");
-      console.log("Sidebar style:", sidebar.style.display);
+      document.body.style.overflow = "hidden";
     });
   });
 
   closeSidebar.addEventListener("click", function () {
     sidebar.style.display = "none";
+     document.body.style.overflow = "auto";
   });
 
   const handleResize = () => {
